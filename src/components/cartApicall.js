@@ -12,7 +12,7 @@ export const cartApiCall = async () => {
 
 export const cartSaveApiCall = async (product) => {
   const cartApiCall = await axios
-    .post("http://localhost:8080/cart/addToCart",product)
+    .post("http://localhost:8080/cart/add",product)
     .then(console.log(product)
     );
   return cartApiCall;

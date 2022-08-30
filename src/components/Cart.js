@@ -60,7 +60,7 @@ const Cart = () => {
             {productCart === undefined ? (
               <h1>Loading...</h1>
             ) : (
-              productCart.data.map((product, index) => (
+              productCart.data.getProduct.map((product, index) => (
                 // <div key={cart}>
                 <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
                   <td>{index}</td>
