@@ -10,15 +10,16 @@ export const wishlistApiCall = async () => {
 };
 
 export const wishlistSaveApi = async (product) => {
+  console.log(product);
   const wishlistCall = await axios
-    .post("http://localhost:8080/wishlist/wishlist", product)
+    .post("http://localhost:8080/wishlist/create", product)
     .then(console.log(product));
   return wishlistCall;
 };
 
 export const wishlistProductApi = async (userId) => {
     const wishlistProductApi = await axios
-      .get(`http://localhost:8080/wishlist/wishlistProduct/${userId}`)
+      .get(`http://localhost:8080/wishlist/wishlist/${userId}`)
       .then((res)=>{return(res)});
     return wishlistProductApi;
   };

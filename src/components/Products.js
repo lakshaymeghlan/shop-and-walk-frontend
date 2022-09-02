@@ -9,7 +9,7 @@ function Products() {
   const [productList, setProductList] = useState();
   useEffect(() => {
     productApiCall().then((res) => {
-      setProductList(res);
+      setProductList(res.data);
     });
   }, []);
 
@@ -23,16 +23,15 @@ function Products() {
               <h1>Loading...</h1>
             ) : (
               productList.data.map((product) => {
-               
                 return (
                   <>
                     <Link
-                      key={product.id}
+                      key={product.productId}
                       to={`/products_details/${product._id}`}
                     >
-                      <h4 className="anchor_cls">{product.name}</h4>
+                      <h4 className="anchor_cls">{product.productName}</h4>
                     </Link>
-                    <img src={product.small} alt={product.name} />
+                    <img src={product.small} alt={product.productName} />
                   </>
                 );
               })

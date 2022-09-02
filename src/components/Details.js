@@ -12,12 +12,14 @@ import { cartSaveApiCall } from "./cartApicall";
 
 const Details = () => {
   var User = JSON.parse(localStorage.getItem("token"));
-  const userId = User.data._id;
+  const userId = User?.data?._id;
 
   const [productDetails, setProductDetails] = useState();
   useEffect(() => {
     productApiCall().then((res) => {
-      setProductDetails(res);
+      setProductDetails(res.data);
+     
+
     });
   }, []);
 
@@ -54,9 +56,9 @@ const Details = () => {
   const wishlist = useSelector((state) => state.wishlist);
   const addToWishlist = (product) => {
     wishlistSaveApi({
-      id: product.id,
-      name: product.name,
-      price: product.price,
+      id: product.productId,
+      name: product.productName,
+      price: product.productPrice,
       amount: 1,
       userId: userId,
     });
@@ -94,11 +96,11 @@ const Details = () => {
               productDetails.data
                 .filter((product) => product._id === product_id)
                 .map((productDetails) => (
-                  <div key={productDetails.id}>
-                    <h3>{productDetails.name}</h3>
-                    <p>{productDetails.desc}</p>
+                  <div key={productDetails.productId}>
+                    <h3>{productDetails.productName}</h3>
+                    <p>{productDetails.productDesc}</p>
                     {/* <img src={productDetails.large} alt={productDetails.name} /> */}
-                    <h2>{productDetails.price}</h2>
+                    <h2>{productDetails.productPrice}</h2>
                     <Link to="/cart">
                       <button
                         className="sign_up"
