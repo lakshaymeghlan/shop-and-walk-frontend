@@ -10,6 +10,8 @@ function Products() {
   useEffect(() => {
     productApiCall().then((res) => {
       setProductList(res.data);
+    
+     
     });
   }, []);
 
@@ -23,6 +25,7 @@ function Products() {
               <h1>Loading...</h1>
             ) : (
               productList.data.map((product) => {
+               console.log(product);
                 return (
                   <>
                     <Link
