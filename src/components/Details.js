@@ -13,6 +13,10 @@ import { cartSaveApiCall } from "./cartApicall";
 const Details = () => {
   var User = JSON.parse(localStorage.getItem("token"));
   const userId = User?.data?._id;
+  const userEmail = User?.data?.email;
+
+  
+
 
   const [productDetails, setProductDetails] = useState();
   useEffect(() => {
@@ -61,6 +65,7 @@ const Details = () => {
       price: product.productPrice,
       amount: 1,
       userId: userId,
+      userEmail: userEmail
     });
 
     console.log(product["id"], product["name"], product["price"]);

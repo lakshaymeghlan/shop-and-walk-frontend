@@ -8,7 +8,9 @@ import { wishlistProductApi } from "./wishlistApiCall";
 
 const Wishlist = () => {
   var User = JSON.parse(localStorage.getItem("token"));
-  const userId = User?.data?._id;
+  // const userId = User?.data?._id;
+  const userEmail = User?.data?.email;
+
 
   const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
@@ -23,7 +25,7 @@ const Wishlist = () => {
 
   const [productWishlist, setProductWishlist] = useState();
   useEffect(() => {
-    wishlistProductApi(userId).then((res) => setProductWishlist(res.data));
+    wishlistProductApi(userEmail).then((res) => setProductWishlist(res.data));
    
   }, []);
 
