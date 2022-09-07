@@ -60,11 +60,11 @@ const Wishlist = () => {
 
                 <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
                   <td>{index}</td>
-                  <td>{product.productName}</td>
+                  <td>{product.name}</td>
 
                   <td>
                     <FaRupeeSign />
-                    {product.productPrice}
+                    {product.price}
                   </td>
 
                   <td>

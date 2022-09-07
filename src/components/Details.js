@@ -76,9 +76,9 @@ const Details = () => {
     if (!isAdded) {
       dispatch(
         wishlistAction.add({
-          id: product.id,
-          name: product.name,
-          price: product.price,
+          id: product.productId,
+          name: product.productName,
+          price: product.productPrice,
           amount: 1,
         })
       );
