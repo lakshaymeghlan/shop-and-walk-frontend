@@ -4,7 +4,7 @@ import { cartAction } from "./redux/cart";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
 import { cartProductApi } from "./cartApicall";
-import { useParams } from "react-router";
+// import { useParams } from "react-router";
 
 const Cart = () => {
   var User = JSON.parse(localStorage.getItem("token"));
@@ -36,8 +36,8 @@ const Cart = () => {
     // cartProductApi(userEmail).then((res) => setProductCart(res));
   }, []);
 
-  const { product_id } = useParams();
-  console.log(product_id);
+  // const { product_id } = useParams();
+  // console.log(product_id);
 
   return (
     <div div className="container">

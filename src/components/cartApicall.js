@@ -10,11 +10,12 @@ export const cartApiCall = async () => {
 };
 
 
-export const cartSaveApiCall = async (product) => {
+export const cartSaveApiCall = async (data) => {
   const cartApiCall = await axios
-    .post("http://localhost:8080/cart/addToCart",product)
-    .then(console.log(product)
-    );
+    .post("http://localhost:8080/cart/addToCart",data)
+    .then(res => {
+      return res; 
+    });
   return cartApiCall;
 };
 

@@ -25,7 +25,24 @@ const Details = () => {
   //////////////////////////////////////////////////////////
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const addToCart = (product) => {
+  const addToCart = async (product) => {
+    // const isAdded = cart.some((id) => {
+    //   return id === product.id;
+    // });
+    let data = {
+      userId: userId,
+      userEmail: userEmail,
+      products: [
+        {
+          id: product.productId,
+          productName: product.productName,
+          productPrice: product.productPrice,
+        },
+      ],
+    };
+    let resposnseData = await cartSaveApiCall(data);
+    console.log(resposnseData.data)
+
     const isAdded = cart.some((id) => {
       return id === product.id;
     });
@@ -33,18 +50,18 @@ const Details = () => {
     if (!isAdded) {
       cartSaveApiCall({
         id: product.id,
-        name: product.name,
-        price: product.price,
-        amount: 1,
-        userId: userId,
+        productName: product.name,
+        productPrice: product.price,
+        // amount: 1,
+        // userId: userId,
       });
       dispatch(
         cartAction.add({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          amount: 1,
-          userId: userId,
+          id: product.productId,
+          productName: product.productName,
+          productPrice: product.productPrice,
+          // amount: 1,
+          // userId: userId,
         })
       );
     } else {
