@@ -18,9 +18,9 @@ export const cartSaveApiCall = async (product) => {
   return cartApiCall;
 };
 
-export const cartProductApi = async (userId) => {
+export const cartProductApi = async (userId,productId) => {
   const cartProductApi = await axios
-    .get(`http://localhost:8080/cartProduct/${userId}`)
+    .get(`http://localhost:8080/cartProduct/delete/${userId}/products/${productId}}`)
     .then((res)=>{return(res)});
   return cartProductApi;
 };
