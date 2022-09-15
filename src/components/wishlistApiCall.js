@@ -9,17 +9,30 @@ export const wishlistApiCall = async () => {
   return wishlistCall;
 };
 
-export const wishlistSaveApi = async (product) => {
-  console.log(product);
+export const wishlistSaveApi = async (data) => {
+  console.log(data);
   const wishlistCall = await axios
-    .post("http://localhost:8080/wishlist/create", product)
-    .then(console.log(product));
+    .post("http://localhost:8080/wishlist/create", data)
+    .then(res => {
+      return res; 
+    });
   return wishlistCall;
 };
 
-export const wishlistProductApi = async (userEmail) => {
-    const wishlistProductApi = await axios
-      .get(`http://localhost:8080/wishlist/wishlist/${userEmail}`)
-      .then((res)=>{return(res)});
-    return wishlistProductApi;
-  };
+export const wishlistProductApi = async (userId) => {
+  const wishlistProductApi = await axios
+    .get(`http://localhost:8080/wishlist/${userId}`)
+    .then((res) => {
+      return res;
+    });
+  return wishlistProductApi;
+};
+
+export const wishlistDeleteApi = async (userId,productId) => {
+  const wishlistDeleteApi = await axios
+    .delete(`http://localhost:8080/wishlist/delete/${userId}/products/${productId}`)
+    .then((res) => {
+      return res;
+    });
+  return wishlistDeleteApi;
+};

@@ -15,15 +15,10 @@ const Details = () => {
   const userId = User?.data?._id;
   const userEmail = User?.data?.email;
 
-  
-
-
   const [productDetails, setProductDetails] = useState();
   useEffect(() => {
     productApiCall().then((res) => {
       setProductDetails(res.data);
-     
-
     });
   }, []);
 
@@ -34,15 +29,16 @@ const Details = () => {
     const isAdded = cart.some((id) => {
       return id === product.id;
     });
-    
+
     if (!isAdded) {
-      cartSaveApiCall({id: product.id,
+      cartSaveApiCall({
+        id: product.id,
         name: product.name,
         price: product.price,
         amount: 1,
-        userId: userId,})
+        userId: userId,
+      });
       dispatch(
-
         cartAction.add({
           id: product.id,
           name: product.name,
@@ -58,17 +54,21 @@ const Details = () => {
 
   //wishlist
   const wishlist = useSelector((state) => state.wishlist);
-  const addToWishlist = (product) => {
-    wishlistSaveApi({
-      id: product.productId,
-      name: product.productName,
-      price: product.productPrice,
-      amount: 1,
+  const addToWishlist = async (product) => {
+    let data = {
       userId: userId,
-      userEmail: userEmail
-    });
+      userEmail: userEmail,
+      products: [
+        {
+          id: product.productId,
+          productName: product.productName,
+          productPrice: product.productPrice,
+        },
+      ],
+    };
+    let resposnseData = await wishlistSaveApi(data);
+    console.log(resposnseData.data)
 
-    console.log(product["id"], product["name"], product["price"]);
     const isAdded = wishlist.some((id) => {
       return id === product.id;
     });
@@ -77,9 +77,8 @@ const Details = () => {
       dispatch(
         wishlistAction.add({
           id: product.productId,
-          name: product.productName,
-          price: product.productPrice,
-          amount: 1,
+          productName: product.productName,
+          productPrice: product.productPrice,
         })
       );
     } else {

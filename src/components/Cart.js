@@ -8,7 +8,8 @@ import { useParams } from "react-router";
 
 const Cart = () => {
   var User = JSON.parse(localStorage.getItem("token"));
-  const userId = User.data._id;
+  const userId = User?.data?._id;
+  // const userEmail = User?.data?.email;
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const Cart = () => {
   const [productCart, setProductCart] = useState();
   useEffect(() => {
     cartProductApi(userId).then((res) => setProductCart(res));
+    // cartProductApi(userEmail).then((res) => setProductCart(res));
   }, []);
 
   const { product_id } = useParams();
