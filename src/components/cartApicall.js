@@ -9,19 +9,31 @@ export const cartApiCall = async () => {
   return cartApiCall;
 };
 
-
 export const cartSaveApiCall = async (data) => {
   const cartApiCall = await axios
-    .post("http://localhost:8080/cart/addToCart",data)
-    .then(res => {
-      return res; 
+    .post("http://localhost:8080/cart/addToCart", data)
+    .then((res) => {
+      return res;
     });
   return cartApiCall;
 };
 
-export const cartProductApi = async (userId,productId) => {
+export const cartProductApi = async (userId) => {
   const cartProductApi = await axios
-    .get(`http://localhost:8080/cartProduct/delete/${userId}/products/${productId}}`)
-    .then((res)=>{return(res)});
+    .get(`http://localhost:8080/cart/${userId}`)
+    .then((res) => {
+      return res;
+    });
   return cartProductApi;
+};
+
+export const cartDeleteApi = async (userId, productId) => {
+  const cartDeleteApi = await axios
+    .get(
+      `http://localhost:8080/cartProduct/delete/${userId}/products/${productId}}`
+    )
+    .then((res) => {
+      return res;
+    });
+  return cartDeleteApi;
 };

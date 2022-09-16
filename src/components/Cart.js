@@ -4,7 +4,6 @@ import { cartAction } from "./redux/cart";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
 import { cartProductApi } from "./cartApicall";
-// import { useParams } from "react-router";
 
 const Cart = () => {
   var User = JSON.parse(localStorage.getItem("token"));
@@ -32,12 +31,9 @@ const Cart = () => {
 
   const [productCart, setProductCart] = useState();
   useEffect(() => {
-    cartProductApi(userId).then((res) => setProductCart(res));
+    cartProductApi(userId).then((res) => setProductCart(res.data));
     // cartProductApi(userEmail).then((res) => setProductCart(res));
   }, []);
-
-  // const { product_id } = useParams();
-  // console.log(product_id);
 
   return (
     <div div className="container">
@@ -62,7 +58,7 @@ const Cart = () => {
             {productCart === undefined ? (
               <h1>Loading...</h1>
             ) : (
-              productCart?.data[0].getProduct.map((product, index) => (
+              productCart?.data[0].Products.map((product, index) => (
                 // <div key={cart}>
                 <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
                   <td>{index}</td>

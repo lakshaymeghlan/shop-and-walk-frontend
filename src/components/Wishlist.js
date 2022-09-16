@@ -44,7 +44,7 @@ const Wishlist = () => {
 
   const deleteCheckbox = () => {
     deleteProducts.map((product) => {
-      wishlistDeleteApi("6322248bee5b3011afceb052", product._id);
+      wishlistDeleteApi(userId, product._id);
     });
   };
 
