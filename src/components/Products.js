@@ -25,7 +25,7 @@ function Products() {
               <h1>Loading...</h1>
             ) : (
               productList.data.map((product) => {
-               console.log(product);
+              //  console.log(product);
                 return (
                   <>
                     <Link

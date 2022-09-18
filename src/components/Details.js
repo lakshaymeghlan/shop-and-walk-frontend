@@ -48,13 +48,13 @@ const Details = () => {
     });
 
     if (!isAdded) {
-      cartSaveApiCall({
-        id: product.id,
-        productName: product.name,
-        productPrice: product.price,
-        // amount: 1,
-        // userId: userId,
-      });
+      // cartSaveApiCall({
+      //   id: product.id,
+      //   productName: product.name,
+      //   productPrice: product.price,
+      //   // amount: 1,
+      //   // userId: userId,
+      // });
       dispatch(
         cartAction.add({
           id: product.productId,

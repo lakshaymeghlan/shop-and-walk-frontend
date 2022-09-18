@@ -41,8 +41,8 @@ const cart = createSlice({
 
     reset: () => {
       return [];
-    }
-  }
+    },
+  },
 });
 
 export const cartAction = cart.actions;

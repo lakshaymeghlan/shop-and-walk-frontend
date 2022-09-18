@@ -8,7 +8,6 @@ import { cartProductApi } from "./cartApicall";
 const Cart = () => {
   var User = JSON.parse(localStorage.getItem("token"));
   const userId = User?.data?._id;
-  // const userEmail = User?.data?.email;
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -32,7 +31,6 @@ const Cart = () => {
   const [productCart, setProductCart] = useState();
   useEffect(() => {
     cartProductApi(userId).then((res) => setProductCart(res.data));
-    // cartProductApi(userEmail).then((res) => setProductCart(res));
   }, []);
 
   return (
@@ -50,16 +48,13 @@ const Cart = () => {
               <th>Id</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Total Price</th>
               <th>Amount</th>
-              {/* <th>Action</th> */}
+              <th>Action</th>
             </tr>
-
             {productCart === undefined ? (
               <h1>Loading...</h1>
             ) : (
-              productCart?.data[0].Products.map((product, index) => (
-                // <div key={cart}>
+              productCart?.data[0].products.map((product, index) => (
                 <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
                   <td>{index}</td>
                   <td>{product.productName}</td>
@@ -70,12 +65,12 @@ const Cart = () => {
                   </td>
 
                   <td>
-                    <FaRupeeSign />
+                    {/* <FaRupeeSign />
                     {parseFloat(product.productPrice) *
-                      parseFloat(product.productPrice)}
-                  </td>
-                  {/* {console.log(e.amount)} */}
-                  <td>
+                      parseFloat(product.productPrice)} */}
+                    {/* </td> 
+                   {console.log(e.amount)} 
+                   <td> */}
                     <button onClick={dec.bind(this, index)}>-</button>{" "}
                     {index.amount}{" "}
                     <button onClick={inc.bind(this, index)}>+</button>
@@ -83,7 +78,7 @@ const Cart = () => {
                   <td>
                     <FaTrashAlt
                       className="trash"
-                      onClick={deleteItem.bind(this, product.id)}
+                      onClick={deleteItem.bind(this, product.productId)}
                     ></FaTrashAlt>
                   </td>
                 </tr>
@@ -95,7 +90,7 @@ const Cart = () => {
           <h3 style={{ fontWeight: "bold", color: "white" }}>
             Grand Total :{" "}
             {cart.reduce(
-              (product, item) => product + item.price * item.amount,
+              (product) => product + product.productPrice * product.amount,
               0
             )}
           </h3>

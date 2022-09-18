@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { wishlistAction } from "./redux/wishlist_redux";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
-// import { useParams } from "react-router";
 import { wishlistProductApi, wishlistDeleteApi } from "./wishlistApiCall";
 
 const Wishlist = () => {
@@ -72,8 +71,6 @@ const Wishlist = () => {
               <h1>Loading...</h1>
             ) : (
               productWishlist?.data[0].products.map((product, index) => (
-                // {wishlist.map((e, index) => {
-
                 <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
                   <td>
                     {" "}
