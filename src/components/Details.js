@@ -42,6 +42,7 @@ const Details = () => {
     };
     let resposnseData = await cartSaveApiCall(data);
     console.log(resposnseData.data)
+   
 
     const isAdded = cart.some((id) => {
       return id === product.id;
@@ -64,6 +65,9 @@ const Details = () => {
           // userId: userId,
         })
       );
+      productApiCall().then((res) => {
+        setProductDetails(res.data);
+      });
     } else {
       alert("Already Added");
     }

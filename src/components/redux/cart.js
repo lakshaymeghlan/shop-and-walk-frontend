@@ -7,7 +7,18 @@ const cart = createSlice({
   initialState,
   reducers: {
     add: (state, action) => {
-      return [...state, action.payload];
+      console.log(action);
+
+      let product = state.find((product) => {
+        return product.id == action.payload.id;
+      });
+      console.log(product);
+      if (product) {
+        return state
+      }else{
+        return [...state, action.payload];
+      }
+      
     },
 
     inc: (state, action) => {
