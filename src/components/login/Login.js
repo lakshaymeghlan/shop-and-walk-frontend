@@ -12,6 +12,24 @@ function App() {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
 
+  async function login()
+    {
+      console.warn(email,password)
+      let item = {email,password}
+
+      let result = await fetch("http://localhost:8080/auth/login-user",{
+        method:'POST',
+        body:JSON.stringify(item),
+        headers:{
+          "content-Type": 'application/json',
+          "Accept":'application/json'
+        }
+      })
+      result = await result.json()
+      localStorage.setItem("user-info",JSON.stringify(result))
+      // history.push("/login")
+    }
+
 
 
 
@@ -53,7 +71,7 @@ function App() {
           />
 
           <div className="text-center text-md-start mt-4 pt-2">
-            <MDBBtn className="mb-0 px-5 white" size="lg">
+            <MDBBtn onClick={login} className="mb-0 px-5 white" size="lg">
               Login
             </MDBBtn>
             <p className="small fw-bold mt-2 pt-1 mb-2 white">
