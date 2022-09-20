@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import {
   MDBContainer,
   MDBCol,
@@ -9,32 +9,40 @@ import {
 import { Link } from "react-router-dom";
 
 function App() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState("")
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
-  async function login()
-    {
-      console.warn(email,password)
-      let item = {email,password}
+  async function login() {
+    console.warn(email, password);
+    let item = { email, password };
 
-      let result = await fetch("http://localhost:8080/auth/login-user",{
-        method:'POST',
-        body:JSON.stringify(item),
-        headers:{
-          "content-Type": 'application/json',
-          "Accept":'application/json'
-        }
-      })
-      result = await result.json()
-      localStorage.setItem("user-info",JSON.stringify(result))
-      // history.push("/login")
-      alert("login successful")
-    }
-
-
-
-
-
+    let result = await fetch("http://localhost:8080/auth/login-user", {
+      method: "POST",
+      body: JSON.stringify(item),
+      headers: {
+        "content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data, "login successful");
+      if (data.status == "ok") {
+        alert("login successful");
+        window.localStorage.setItem("token", JSON.stringify({ ...data}));
+        window.location.href = "./userDetails";
+      }else{
+        alert("login credentials are incorrect")
+      }
+    })
+    result = await result.json();
+    localStorage.setItem("user-info", JSON.stringify(result));
+    // history.push("/login")
+   
+    
+  
+    alert("login successful");
+  }
 
   return (
     <MDBContainer fluid className="p-3 my-5 h-custom">
@@ -58,7 +66,8 @@ function App() {
             wrapperClass="mb-4"
             label="Email address"
             id="formControlLg"
-            value={email} onChange={(e)=>setEmail(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             type="email"
             size="lg"
           />
@@ -66,14 +75,15 @@ function App() {
             wrapperClass="mb-4"
             label="Password"
             id="formControlLg"
-            value={password} onChange={(e)=>setPassword(e.target.value)}
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
             type="password"
             size="lg"
           />
 
           <div className="text-center text-md-start mt-4 pt-2">
             <MDBBtn onClick={login} className="mb-0 px-5 white" size="lg">
-              Login
+            Login
             </MDBBtn>
             <p className="small fw-bold mt-2 pt-1 mb-2 white">
               Don&apos;t have an account? <Link to="/Signup">Register </Link>

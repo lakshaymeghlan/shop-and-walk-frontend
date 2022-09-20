@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
@@ -15,31 +15,39 @@ import {
 } from "mdb-react-ui-kit";
 
 function App() {
-  const[name,setName] = useState("")
-  const[email,setEmail] = useState("")
-  const[password,setPassword] = useState("")
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   // const history = useHistory()
 
-  async function signUp()
-    {
-      console.warn(name,email,password)
-      let item = {name,email,password}
+  async function signUp() {
+    console.warn(name, email, password);
+    let item = { name, email, password };
 
-      let result = await fetch("http://localhost:8080/auth/register",{
-        method:'POST',
-        body:JSON.stringify(item),
-        headers:{
-          "content-Type": 'application/json',
-          "Accept":'application/json'
-        }
-      })
-      result = await result.json()
-      localStorage.setItem("user-info",JSON.stringify(result))
-      // history.push("/login")
-      alert("register is successful you can login now")
-    }
-  
-
+    let result = await fetch("http://localhost:8080/auth/register", {
+      method: "POST",
+      body: JSON.stringify(item),
+      headers: {
+        "content-Type": "application/json",
+        Accept: "application/json",
+      },
+    })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data, "register successful");
+      if (data.status == "ok") {
+        alert("register successful");
+        window.localStorage.setItem("token", JSON.stringify({ ...data}));
+        window.location.href = "./login";
+      }else{
+        alert("register credentials are incorrect")
+      }
+    })
+    result = await result.json();
+    localStorage.setItem("user-info", JSON.stringify(result));
+    // history.push("/login")
+    // alert("register is successful you can login now");
+  }
 
   return (
     <MDBContainer fluid>
@@ -55,26 +63,42 @@ function App() {
                 Sign up
               </p>
 
-              <div  className="d-flex flex-row align-items-center mb-4 ">
+              <div className="d-flex flex-row align-items-center mb-4 ">
                 <MDBIcon fas icon="user me-3" size="lg" />
-                <MDBInput 
-                value={name} onChange={(e)=>setName(e.target.value)} 
+                <MDBInput
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
                   label="Your Name"
                   id="form1"
                   type="text"
                   className="w-100"
                 />
-                
               </div>
 
-              <div  className="d-flex flex-row align-items-center mb-4">
+              <div className="d-flex flex-row align-items-center mb-4">
                 <MDBIcon fas icon="envelope me-3" size="lg" />
-                <MDBInput value={email} onChange={(e)=>setEmail(e.target.value)} label="Your Email" id="form2" type="email" />
+                <MDBInput
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  label="Your Email"
+                  id="form2"
+                  type="email"
+                />
               </div>
 
-              <div value={password} onChange={(e)=>setPassword(e.target.value)} className="d-flex flex-row align-items-center mb-4">
+              <div
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="d-flex flex-row align-items-center mb-4"
+              >
                 <MDBIcon fas icon="lock me-3" size="lg" />
-                <MDBInput value={password} onChange={(e)=>setPassword(e.target.value)} label="Password" id="form3" type="password" />
+                <MDBInput
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  label="Password"
+                  id="form3"
+                  type="password"
+                />
               </div>
 
               <div className="mb-4">
