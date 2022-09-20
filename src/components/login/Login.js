@@ -28,6 +28,7 @@ function App() {
       result = await result.json()
       localStorage.setItem("user-info",JSON.stringify(result))
       // history.push("/login")
+      alert("login successful")
     }
 
 
