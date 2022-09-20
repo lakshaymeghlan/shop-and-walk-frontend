@@ -120,3 +120,37 @@ body{
 /* .FaHeart{
   color:red;
 } */
+
+.signup_1{
+  background-color: #27333f;
+  border-radius: 2rem;
+}
+.mb-4,.head{
+  color: white;
+}
+
+.goTo{
+  background-color: #5b5e62;
+  color: white;
+ border-radius: 6px;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+  height: 100%;
+  }
+}
+
+.white{
+  color: white;
+}
