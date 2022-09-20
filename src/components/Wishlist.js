@@ -101,7 +101,9 @@ const Wishlist = () => {
             )}
           </table>
           <button onClick={deleteAll}>Remove All</button>
-          <button onClick={deleteCheckbox}>Remove CHECKBOX</button>
+
+          {/* TODO @lakshay button should be visible only when item is checked and vice versa */}
+          <button onClick={deleteCheckbox}>Remove Selected</button>
         </>
       ) : (
         <p style={{ fontWeight: "bold", color: "white" }}>Empty Wishlist</p>

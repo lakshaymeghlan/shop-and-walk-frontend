@@ -31,11 +31,18 @@ export default class SignUp extends Component {
         lname,
         password,
       }),
+      
     })
       .then((res) => res.json())
+      
       .then((data) => {
         console.log(data, "userRegister");
       });
+      if(this.state != " "){
+        this.setState({fname : " "});
+        console.log(this.state.fname)
+      }
+      
   }
 
   render() {

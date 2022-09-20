@@ -27,15 +27,15 @@ function Products() {
               productList.data.map((product) => {
               //  console.log(product);
                 return (
-                  <>
+                  <div key={product._id}>
                     <Link
-                      key={product.productId}
+                      
                       to={`/products_details/${product._id}`}
                     >
-                      <h4 className="anchor_cls">{product.productName}</h4>
+                      <h4 className="anchor_cls ">{product.productName}</h4>
                     </Link>
                     <img src={product.small} alt={product.productName} />
-                  </>
+                  </div>
                 );
               })
             )}
