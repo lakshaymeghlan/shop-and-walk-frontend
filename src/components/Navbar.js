@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import photo from "../assest/cart.png";
 import { FaHeart } from "react-icons/fa";
@@ -6,8 +6,37 @@ import { FaHeart } from "react-icons/fa";
 
 
 const Navbar = () => {
+  const [userToken, setUserToken] = useState()
+  const [userName, setUserName] = useState('')
 // const userLogin = useSelector(state => state.userLogin)
 // const {userInfo}
+useEffect(()=>{
+  setUserToken(window.localStorage.getItem("token"))
+  // console.log(JSON.parse(userToken).data)
+  if(window.localStorage.getItem("token"))
+  fetch("http://localhost:8080/auth/userData", {
+    method: "POST",
+    crossDomain: true,
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      "Access-Control-Allow-Origin": "*",
+    },
+    body: JSON.stringify({
+      token: JSON.parse(window.localStorage.getItem("token")).data,
+    }),
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      console.log(data, "userData");
+      setUserName(data.data.name)
+    });
+},[])
+
+// const logout=()=>{
+//   localStorage.clear();
+//   Navigate("/")
+// };
 
   return (
     <div>
@@ -39,11 +68,19 @@ const Navbar = () => {
                   Products
                 </Link>
               </li>
+              {userToken==null ?
               <li className="nav-item">
                 <Link to="/Login" className="nav-items">
                   LogIn/SignUp
                 </Link>
               </li>
+              :
+              <li className="nav-item">
+                <Link to="/UserDetails" className="nav-items">
+                  {userName}
+                  </Link>
+              </li>
+              }
             </ul>
 
             <Link to ="/Wishlist" className="nav-items">
@@ -70,3 +107,5 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+

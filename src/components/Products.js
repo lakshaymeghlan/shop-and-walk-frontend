@@ -9,6 +9,7 @@ function Products() {
   const [productList, setProductList] = useState();
   useEffect(() => {
     productApiCall().then((res) => {
+      console.log(res.data)
       setProductList(res.data);
     
      

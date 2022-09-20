@@ -1,13 +1,17 @@
-import React, { Component } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+// function logout(){
+//   localStorage.clear();
+//   Navigate("/login")
+// }
+const UserDetails = () => {
 
-export default class UserDetails extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      userData: "",
-    };
-  }
-  componentDidMount() {
+  const [userName ,setUserName] = useState('')
+  const [userEmail ,setUserEmail] = useState('')
+  const navigate = useNavigate()
+  useEffect(()=>{
+    var tokenData = window.localStorage.getItem("token")
+    if(JSON.parse(tokenData)){
     fetch("http://localhost:8080/auth/userData", {
       method: "POST",
       crossDomain: true,
@@ -17,21 +21,28 @@ export default class UserDetails extends Component {
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        token: window.localStorage.getItem("token"),
+        token: JSON.parse(tokenData).data,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
         console.log(data, "userData");
-        this.setState({ userData: data.data });
+        setUserName(data.data.name);
+        setUserEmail(data.data.email)
       });
   }
-  render() {
+}, [])
+    
     return (
       <div className="user_det">
-        Name<h1>{this.state.userData.fname}</h1>
-        Email <h1>{this.state.userData.email}</h1>
+        Name<h1>{userName}</h1>
+        Email <h1>{userEmail}</h1>
+
+        <button onClick={()=>{localStorage.clear();
+  navigate("/login")}}>logout</button>
       </div>
     );
-  }
 }
+
+export default UserDetails;
+
