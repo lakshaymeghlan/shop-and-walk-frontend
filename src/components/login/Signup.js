@@ -32,21 +32,26 @@ function App() {
         Accept: "application/json",
       },
     })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data, "register successful");
-      if (data.status == "ok") {
-        alert("register successful");
-        window.localStorage.setItem("token", JSON.stringify({ ...data}));
-        window.location.href = "./login";
-      }else{
-        alert("register credentials are incorrect")
-      }
-    })
+    //  setName("");
+    //   setEmail("");
+    //   setPassword("");
+      
+      .then((data) => {
+        console.log(data, "register successful");
+        if (data.statusText == "OK") {
+          console.log("lakshay")
+          alert("register successful");
+          window.localStorage.setItem("token", JSON.stringify({ ...data }));
+          setName("");
+          setEmail("");
+          setPassword("");
+          window.location.href = "./login";
+        } else {
+          alert("register credentials are incorrect");
+        }
+      });
     result = await result.json();
     localStorage.setItem("user-info", JSON.stringify(result));
-    // history.push("/login")
-    // alert("register is successful you can login now");
   }
 
   return (

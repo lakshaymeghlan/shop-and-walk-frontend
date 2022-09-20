@@ -4,6 +4,7 @@ import photo from "../assest/cart.png";
 import { FaHeart } from "react-icons/fa";
 // import {useDispatch, useSelector} from 'react-redux'
 
+
 const Navbar = () => {
 // const userLogin = useSelector(state => state.userLogin)
 // const {userInfo}

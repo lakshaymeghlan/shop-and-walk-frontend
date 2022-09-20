@@ -8,12 +8,12 @@ import {
 } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
 
+
 function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   async function login() {
-    console.warn(email, password);
     let item = { email, password };
 
     let result = await fetch("http://localhost:8080/auth/login-user", {
@@ -30,18 +30,15 @@ function App() {
       if (data.status == "ok") {
         alert("login successful");
         window.localStorage.setItem("token", JSON.stringify({ ...data}));
+        setEmail("");
+        setPassword("");
         window.location.href = "./userDetails";
       }else{
         alert("login credentials are incorrect")
       }
     })
     result = await result.json();
-    localStorage.setItem("user-info", JSON.stringify(result));
-    // history.push("/login")
-   
-    
-  
-    alert("login successful");
+    localStorage.setItem("user-info", JSON.stringify(result));   
   }
 
   return (
