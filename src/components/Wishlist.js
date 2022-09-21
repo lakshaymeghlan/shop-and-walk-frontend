@@ -7,7 +7,7 @@ import { wishlistProductApi, wishlistDeleteApi } from "./wishlistApiCall";
 
 const Wishlist = () => {
   var User = JSON.parse(localStorage.getItem("token"));
-  const userId = User?.data?._id;
+  const userId = User?.user?._id;
 
   const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
@@ -70,7 +70,7 @@ const Wishlist = () => {
             {productWishlist === undefined ? (
               <h1>Loading...</h1>
             ) : (
-              productWishlist?.data.products.map((product, index) => (
+              productWishlist?.data[0].products.map((product, index) => (
 
                 <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
                   <td>

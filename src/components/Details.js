@@ -12,8 +12,8 @@ import { cartSaveApiCall } from "./cartApicall";
 
 const Details = () => {
   var User = JSON.parse(localStorage.getItem("token"));
-  const userId = User?.data?._id;
-  const userEmail = User?.data?.email;
+  const userId = User?.user?._id;
+  const userEmail = User?.user?.email;
 
   const [productDetails, setProductDetails] = useState();
   useEffect(() => {

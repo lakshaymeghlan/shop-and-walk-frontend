@@ -11,10 +11,24 @@ const Navbar = () => {
 // const userLogin = useSelector(state => state.userLogin)
 // const {userInfo}
 useEffect(()=>{
- 
-  // console.log(localStorage.getItem("token")!='undefined')
-  if(!localStorage.getItem("token")){
+  var tokenData = window.localStorage.getItem("token")
+  if(JSON.parse(tokenData)){
+  // // console.log(!localStorage.getItem("token"))
+  // if(localStorage.getItem("token")!=null){
     setUserToken(localStorage.getItem("token"))
+    // let auth = JSON.parse(localStorage.getItem("token"))
+    // fetch("http://localhost:8080/auth/userData", {
+    //   method: "POST",
+    //   crossDomain: true,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     Accept: "application/json",
+    //     "Access-Control-Allow-Origin": "*",
+    //   },
+    //   body: JSON.stringify({
+    //     token: JSON.parse(localStorage.getItem("token")).token,
+    //   }),
+    // })
     fetch("http://localhost:8080/auth/userData", {
       method: "POST",
       crossDomain: true,
@@ -24,16 +38,16 @@ useEffect(()=>{
         "Access-Control-Allow-Origin": "*",
       },
       body: JSON.stringify({
-        token: JSON.parse(localStorage.getItem("token")).token,
+        token: JSON.parse(tokenData).data,
       }),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "userData");
+        console.log(data.data,userToken==null, "userData1");
         setUserName(data.data.name)
       });
   }
- 
+//  console.log('hello user')
 },[])
 
 // const logout=()=>{

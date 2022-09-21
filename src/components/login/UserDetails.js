@@ -26,7 +26,7 @@ const UserDetails = () => {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data, "userData");
+        // console.log(data, "userData");
         setUserName(data.data.name);
         setUserEmail(data.data.email)
       });
