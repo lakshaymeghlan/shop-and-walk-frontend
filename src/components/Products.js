@@ -4,15 +4,19 @@ import { Link } from "react-router-dom";
 // import {  useSelector } from "react-redux";
 // import { productAction } from "./redux/product_redux";
 import productApiCall from "./productApiCall";
+// import imageApi from "./imageApi";
 
 function Products() {
   const [productList, setProductList] = useState();
   useEffect(() => {
+    // imageApi().then((res) => {
+    //   console.log(res.data)
+
+    // });
+
     productApiCall().then((res) => {
-      console.log(res.data)
+      // console.log(res.data)
       setProductList(res.data);
-    
-     
     });
   }, []);
 
@@ -26,16 +30,12 @@ function Products() {
               <h1>Loading...</h1>
             ) : (
               productList.data.map((product) => {
-              //  console.log(product);
                 return (
                   <div key={product._id}>
-                    <Link
-                      
-                      to={`/products_details/${product._id}`}
-                    >
+                    <Link to={`/products_details/${product._id}`}>
                       <h4 className="anchor_cls ">{product.productName}</h4>
                     </Link>
-                    <img src={product.small} alt={product.productName} />
+                    <img src={product.img} alt={product.productName} />
                   </div>
                 );
               })

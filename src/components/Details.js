@@ -125,6 +125,9 @@ const Details = () => {
                     <h3>{productDetails.productName}</h3>
                     <p>{productDetails.productDesc}</p>
                     {/* <img src={productDetails.large} alt={productDetails.name} /> */}
+                    <div className="prod_img">
+                    <img src={productDetails.img} alt={productDetails.productName} />
+                    </div>
                     <h2>{productDetails.productPrice}</h2>
                     <Link to="/cart">
                       <button

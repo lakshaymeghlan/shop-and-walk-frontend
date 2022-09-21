@@ -13,7 +13,7 @@ function App() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  async function login() {
+  const Login = async ()=> {
     let item = { email, password };
 
     let result = await fetch("http://localhost:8080/auth/login-user", {
@@ -30,6 +30,7 @@ function App() {
       if (data.status == "ok") {
         alert("login successful");
         window.localStorage.setItem("token", JSON.stringify({ ...data}));
+        // window.localStorage.setItem("user", JSON.stringify({ ...data}));
         setEmail("");
         setPassword("");
         window.location.href = "./userDetails";
@@ -79,7 +80,7 @@ function App() {
           />
 
           <div className="text-center text-md-start mt-4 pt-2">
-            <MDBBtn onClick={login} className="mb-0 px-5 white" size="lg">
+            <MDBBtn onClick={Login} className="mb-0 px-5 white" size="lg">
             Login
             </MDBBtn>
             <p className="small fw-bold mt-2 pt-1 mb-2 white">

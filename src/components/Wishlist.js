@@ -70,7 +70,7 @@ const Wishlist = () => {
             {productWishlist === undefined ? (
               <h1>Loading...</h1>
             ) : (
-              productWishlist?.data[0].products.map((product, index) => (
+              productWishlist?.data.products.map((product, index) => (
 
                 <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
                   <td>

@@ -10,7 +10,7 @@ export const wishlistApiCall = async () => {
 };
 
 export const wishlistSaveApi = async (data) => {
-  console.log(data);
+  console.log(data);wishlistSaveApi
   const wishlistCall = await axios
     .post("http://localhost:8080/wishlist/create", data)
     .then(res => {
