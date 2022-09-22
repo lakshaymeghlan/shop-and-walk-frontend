@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { wishlistAction } from "./redux/wishlist_redux";
-import { FaTrashAlt } from "react-icons/fa";
+// import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
-import { wishlistProductApi, wishlistDeleteApi } from "./wishlistApiCall";
+import { wishlistProductApi, wishlistDeleteApi,wishlistDeleteProductApi } from "./wishlistApiCall";
 
 const Wishlist = () => {
   var User = JSON.parse(localStorage.getItem("token"));
@@ -12,9 +12,9 @@ const Wishlist = () => {
   const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
 
-  const deleteItem = (id) => {
-    dispatch(wishlistAction.remove(id));
-  };
+  // const deleteItem = (id) => {
+  //   dispatch(wishlistAction.remove(id));
+  // };
 
   const deleteAll = (id) => {
     dispatch(wishlistAction.reset(id));
@@ -91,10 +91,12 @@ const Wishlist = () => {
                   </td>
 
                   <td>
-                    <FaTrashAlt
+                    {/* <FaTrashAlt
                       className="trash"
-                      onClick={deleteItem.bind(this, product.productId)}
-                    ></FaTrashAlt>
+                      // onClick={deleteItem.bind(this, product.productId)}
+                      onClick={()=>wishlistDeleteProductApi(product._id)}
+                    ></FaTrashAlt> */}
+                    <button type="submit" onClick={()=>wishlistDeleteProductApi(product._id)}> Daba do please!</button>
                   </td>
                 </tr>
               ))

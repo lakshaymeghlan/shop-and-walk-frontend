@@ -28,6 +28,7 @@ export const wishlistProductApi = async (userId) => {
   return wishlistProductApi;
 };
 
+
 export const wishlistDeleteApi = async (userId,productId) => {
   const wishlistDeleteApi = await axios
     .delete(`http://localhost:8080/wishlist/delete/${userId}/products/${productId}`)
@@ -36,3 +37,12 @@ export const wishlistDeleteApi = async (userId,productId) => {
     });
   return wishlistDeleteApi;
 };
+
+export const wishlistDeleteProductApi = async(id)=>{
+  const wishlistDeleteProductApi = await axios
+  .delete(`http://localhost:8080/wishlist/delete/${id}`)
+  .then((res)=>{
+    return res;
+  });
+  return wishlistDeleteProductApi;
+}
