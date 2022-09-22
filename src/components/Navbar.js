@@ -94,7 +94,7 @@ useEffect(()=>{
               :
               <li className="nav-item">
                 <Link to="/UserDetails" className="nav-items">
-                  {userName}
+                  Hi! {userName}
                   </Link>
               </li>
               }
