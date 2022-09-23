@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { wishlistAction } from "./redux/wishlist_redux";
 // import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
-import { wishlistProductApi, wishlistDeleteApi,wishlistDeleteProductApi } from "./wishlistApiCall";
+import { wishlistProductApi, wishlistDeleteApi } from "./wishlistApiCall";
 
 const Wishlist = () => {
   var User = JSON.parse(localStorage.getItem("token"));
@@ -23,7 +23,15 @@ const Wishlist = () => {
   const [productWishlist, setProductWishlist] = useState();
   useEffect(() => {
     wishlistProductApi(userId).then((res) => setProductWishlist(res.data));
+    // console.log(productWishlist)
   }, []);
+
+  const delete_product = (id)=>{
+    wishlistDeleteApi(productWishlist?.data[0]._id,id).then(resp=>{
+      if(resp)
+      wishlistProductApi(userId).then((res) => setProductWishlist(res.data));
+    })
+  }
 
   // add and delete checkbox item in component part
   const [deleteProducts, setDeleteProducts] = useState([]);
@@ -96,7 +104,7 @@ const Wishlist = () => {
                       // onClick={deleteItem.bind(this, product.productId)}
                       onClick={()=>wishlistDeleteProductApi(product._id)}
                     ></FaTrashAlt> */}
-                    <button type="submit" onClick={()=>wishlistDeleteProductApi(product._id)}> Daba do please!</button>
+                    <button type="submit" onClick={()=>delete_product(product._id)}> Delete</button>
                   </td>
                 </tr>
               ))

@@ -7,7 +7,7 @@ import { cartProductApi ,cartDeleteApi} from "./cartApicall";
 
 const Cart = () => {
   var User = JSON.parse(localStorage.getItem("token"));
-  const userId = User?.data?._id;
+  const userId = User?.user?._id;
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
@@ -28,9 +28,14 @@ const Cart = () => {
     dispatch(cartAction.reset(id));
   };
 
-  const [productCart, setProductCart] = useState();
+  const [productCart, setProductCart] = useState([]);
   useEffect(() => {
+    // cartProductApi(userId).then((res) =>{
+    //   setProductCart(res.data)
+    //   // console.log(productCart)
+    // });
     cartProductApi(userId).then((res) => setProductCart(res.data));
+    console.log(productCart)
   }, []);
 
    // add and delete checkbox item in component part
@@ -100,7 +105,7 @@ const Cart = () => {
             {productCart === undefined ? (
               <h1>Loading...</h1>
             ) : (
-              productCart?.data[0].products.map((product, index) => (
+              productCart?.products.map((product, index) => (
                 <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
                    <input
                       onChange={() => {
