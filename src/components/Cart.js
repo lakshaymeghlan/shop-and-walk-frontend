@@ -28,18 +28,14 @@ const Cart = () => {
     dispatch(cartAction.reset(id));
   };
 
-
-
   const [productCart, setProductCart] = useState();
   useEffect(() => {
-    cartProductApi(userId).then((res) =>{
-      setProductCart(res.data)
-      console.log("-++++++++>",res.data)
+    cartProductApi(userId).then((res) => {
+      setProductCart(res.data);
+      console.log("-++++++++>", res.data);
     });
     // cartProductApi(userId).then((res) => setProductCart(res.data));
     // console.log("-++++++++>",productCart);
-  
-
   }, []);
 
   // add and delete checkbox item in component part
@@ -64,12 +60,11 @@ const Cart = () => {
     });
   };
 
-  const delete_product =(id)=>{
-    cartDeleteApi(productCart?.data[0]._id,id).then(resp=>{
-      if(resp)
-      cartProductApi(userId).then((res)=>setProductCart(res.data))
-    })
-  }
+  const delete_product = (id) => {
+    cartDeleteApi(productCart?.data[0]._id, id).then((resp) => {
+      if (resp) cartProductApi(userId).then((res) => setProductCart(res.data));
+    });
+  };
 
   //    const [existedProducts, setexistedProducts] = useState([]);
   //    const ProductTexistedList = (product) => {
@@ -86,6 +81,16 @@ const Cart = () => {
   //   }
   // };
 
+  const [Quantity, setQuantity] = useState(1);
+
+  const handleDecrement = () => {
+    setQuantity((prevCount) => prevCount - 1);
+  };
+
+  const handleIncrement = () => {
+    setQuantity((prevCount) => prevCount + 1);
+  };
+
   return (
     <div div className="container">
       {cart.length !== 0 ? (
@@ -95,7 +100,7 @@ const Cart = () => {
               width: "100%",
               margin: "30px 0",
               borderCollapse: "collapse",
-            }} 
+            }}
           >
             <tbody>
               <tr style={{ fontWeight: "bold", color: "white" }}>
@@ -104,7 +109,7 @@ const Cart = () => {
                 <th>id</th>
                 <th>Name</th>
                 <th>Price</th>
-                {/* <th>Quantity</th> */}
+                <th>Quantity</th>
                 <th>Action</th>
               </tr>
               {productCart === undefined ? (
@@ -142,12 +147,19 @@ const Cart = () => {
                     <button onClick={inc.bind(this, index)}>+</button>
                     
                   </td>  */}
+                    <button className="control__btn" onClick={handleIncrement}>
+                      +
+                    </button>
+
+                    {Quantity}
+                    <button className="control__btn" onClick={handleDecrement}>
+                      -
+                    </button>
                     <td>
-                      
                       <FaTrashAlt
                         className="trash"
                         type="submit"
-                        onClick={()=>delete_product (product._id)}
+                        onClick={() => delete_product(product._id)}
                       ></FaTrashAlt>
                     </td>
                   </tr>
