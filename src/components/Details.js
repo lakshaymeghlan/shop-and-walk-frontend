@@ -41,7 +41,7 @@ const Details = () => {
       ],
     };
     let resposnseData = await cartSaveApiCall(data);
-    console.log(resposnseData.data)
+    console.log("---------------->",resposnseData.data)
    
 
     const isAdded = cart.some((id) => {
