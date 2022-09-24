@@ -20,9 +20,9 @@ const Cart = () => {
   //   dispatch(cartAction.dec(id));
   // };
 
-  const deleteItem = (id) => {
-    dispatch(cartAction.remove(id));
-  };
+  // const deleteItem = (id) => {
+  //   dispatch(cartAction.remove(id));
+  // };
 
   const deleteAll = (id) => {
     dispatch(cartAction.reset(id));
@@ -63,6 +63,13 @@ const Cart = () => {
       cartDeleteApi(userId, product._id);
     });
   };
+
+  const delete_product =(id)=>{
+    cartDeleteApi(productCart?.data[0]._id,id).then(resp=>{
+      if(resp)
+      cartProductApi(userId).then((res)=>setProductCart(res.data))
+    })
+  }
 
   //    const [existedProducts, setexistedProducts] = useState([]);
   //    const ProductTexistedList = (product) => {
@@ -140,7 +147,7 @@ const Cart = () => {
                       <FaTrashAlt
                         className="trash"
                         type="submit"
-                        onClick={deleteItem.bind(this, product.productId)}
+                        onClick={()=>delete_product (product._id)}
                       ></FaTrashAlt>
                     </td>
                   </tr>

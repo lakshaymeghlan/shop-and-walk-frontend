@@ -27,11 +27,10 @@ export const cartProductApi = async (userId) => {
   return cartProductApi;
 };
 
-export const cartDeleteApi = async (userId, productId) => {
+export const cartDeleteApi = async (cartId, productId) => {
   const cartDeleteApi = await axios
-    .get(
-      `http://localhost:8080/cartProduct/delete/${userId}/products/${productId}}`
-    )
+    .delete(
+      `http://localhost:8080/cart/delete/${cartId}/product/${productId}`)
     .then((res) => {
       return res;
     });
