@@ -154,3 +154,15 @@ body{
 .white{
   color: white;
 }
+
+.img_product{
+  height: 30rem;
+  width: 30rem;
+}
+.prod_img{
+  height: 35rem;
+  width: 35rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

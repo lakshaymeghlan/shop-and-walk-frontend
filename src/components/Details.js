@@ -41,8 +41,7 @@ const Details = () => {
       ],
     };
     let resposnseData = await cartSaveApiCall(data);
-    console.log("---------------->",resposnseData.data)
-   
+    console.log("---------------->", resposnseData.data);
 
     const isAdded = cart.some((id) => {
       return id === product.id;
@@ -88,7 +87,7 @@ const Details = () => {
       ],
     };
     let resposnseData = await wishlistSaveApi(data);
-    console.log(resposnseData.data)
+    console.log(resposnseData.data);
 
     const isAdded = wishlist.some((id) => {
       return id === product.id;
@@ -125,9 +124,13 @@ const Details = () => {
                     <h3>{productDetails.productName}</h3>
                     <p>{productDetails.productDesc}</p>
                     {/* <img src={productDetails.large} alt={productDetails.name} /> */}
-                    <div className="prod_img">
-                    <img src={productDetails.img} alt={productDetails.productName} />
-                    </div>
+
+                    <img
+                      className="prod_img "
+                      src={productDetails.img}
+                      alt={productDetails.productName}
+                    />
+
                     <h2>{productDetails.productPrice}</h2>
                     <Link to="/cart">
                       <button

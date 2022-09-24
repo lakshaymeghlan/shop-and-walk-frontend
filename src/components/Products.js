@@ -35,7 +35,11 @@ function Products() {
                     <Link to={`/products_details/${product._id}`}>
                       <h4 className="anchor_cls ">{product.productName}</h4>
                     </Link>
-                    <img src={product.img} alt={product.productName} />
+                    <img
+                      className="img_product"
+                      src={product.img}
+                      alt={product.productName}
+                    />
                   </div>
                 );
               })
