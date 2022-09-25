@@ -36,3 +36,13 @@ export const cartDeleteApi = async (cartId, productId) => {
     });
   return cartDeleteApi;
 };
+
+export const updateCart = async (Id, productId) => {
+  const updateCart = await axios
+    .delete(
+      `http://localhost:8080/cart/delete/${Id}/products/${productId}`)
+    .then((res) => {
+      return res;
+    });
+  return updateCart;
+};

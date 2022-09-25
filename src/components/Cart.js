@@ -91,9 +91,6 @@ const Cart = () => {
     setQuantity((prevCount) => prevCount + 1);
   };
 
-  
-  
-
   return (
     <div div className="container">
       {cart.length !== 0 ? (
@@ -134,7 +131,7 @@ const Cart = () => {
 
                     <td>
                       <FaRupeeSign />
-                      {product.productPrice*Quantity}
+                      {product.productPrice * Quantity}
                     </td>
 
                     {console.log(product.productPrice)}
@@ -151,12 +148,18 @@ const Cart = () => {
                     
                   </td>  */}
                     {/* ------------------------------------------------------------------------- */}
-                    <button className="control__btn" onClick={()=>handleIncrement(product._id)}>
+                    <button
+                      className="control__btn"
+                      onClick={() => handleIncrement(product._id)}
+                    >
                       +
                     </button>
 
                     {Quantity}
-                    <button className="control__btn" onClick={()=>handleDecrement(product._id)}>
+                    <button
+                      className="control__btn"
+                      onClick={() => handleDecrement(product._id)}
+                    >
                       -
                     </button>
                     <td>
@@ -179,7 +182,7 @@ const Cart = () => {
             {/* {console.log(cart)} */}
             Grand Total :{" "}
             {cart.reduce(
-              (total, product) => total + Number(product.productPrice),
+              (total, product) => total + Number(product.productPrice * Quantity),
               0
             )}
           </h3>
