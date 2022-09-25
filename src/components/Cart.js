@@ -91,6 +91,9 @@ const Cart = () => {
     setQuantity((prevCount) => prevCount + 1);
   };
 
+  
+  
+
   return (
     <div div className="container">
       {cart.length !== 0 ? (
@@ -131,7 +134,7 @@ const Cart = () => {
 
                     <td>
                       <FaRupeeSign />
-                      {product.productPrice}
+                      {product.productPrice*Quantity}
                     </td>
 
                     {console.log(product.productPrice)}
@@ -147,12 +150,13 @@ const Cart = () => {
                     <button onClick={inc.bind(this, index)}>+</button>
                     
                   </td>  */}
-                    <button className="control__btn" onClick={handleIncrement}>
+                    {/* ------------------------------------------------------------------------- */}
+                    <button className="control__btn" onClick={()=>handleIncrement(product._id)}>
                       +
                     </button>
 
                     {Quantity}
-                    <button className="control__btn" onClick={handleDecrement}>
+                    <button className="control__btn" onClick={()=>handleDecrement(product._id)}>
                       -
                     </button>
                     <td>
