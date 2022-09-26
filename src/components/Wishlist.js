@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { wishlistAction } from "./redux/wishlist_redux";
 // import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
-import { wishlistProductApi, wishlistDeleteApi } from "./wishlistApiCall";
+import { wishlistProductApi, wishlistDeleteApi, wishlistDeleteProductApi} from "./wishlistApiCall";
 
 const Wishlist = () => {
   var User = JSON.parse(localStorage.getItem("token"));
@@ -34,25 +34,43 @@ const Wishlist = () => {
   }
 
   // add and delete checkbox item in component part
+  // const [deleteProducts, setDeleteProducts] = useState([]);
+  // const addProductToDeleteList = (product) => {
+  //   let exists = deleteProducts.find(
+  //     (currentProduct) => currentProduct._id === product._id
+  //   );
+  //   if (exists) {
+  //     let products = deleteProducts.filter((currentProduct) => {
+  //       return product._id != currentProduct._id;
+  //     });
+  //     setDeleteProducts(Array.from(new Set(products)));
+  //   } else {
+  //     setDeleteProducts(Array.from(new Set([...deleteProducts, product])));
+  //   }
+  // };
+
   const [deleteProducts, setDeleteProducts] = useState([]);
   const addProductToDeleteList = (product) => {
     let exists = deleteProducts.find(
-      (currentProduct) => currentProduct._id === product._id
+      (currentProduct) => currentProduct === product._id
     );
     if (exists) {
       let products = deleteProducts.filter((currentProduct) => {
-        return product._id != currentProduct._id;
+        return product._id != currentProduct;
       });
       setDeleteProducts(Array.from(new Set(products)));
     } else {
-      setDeleteProducts(Array.from(new Set([...deleteProducts, product])));
+      setDeleteProducts(Array.from(new Set([...deleteProducts, product._id])));
     }
   };
 
-  const deleteCheckbox = () => {
-    deleteProducts.map((product) => {
-      wishlistDeleteApi(userId, product._id);
-    });
+  const deleteCheckbox = async() => {
+     
+     let result = await wishlistDeleteProductApi(userId, deleteProducts);
+     if(result){
+      setProductWishlist(result.products)
+     }
+    
   };
 
   return (
@@ -123,3 +141,6 @@ const Wishlist = () => {
 };
 
 export default Wishlist;
+
+
+

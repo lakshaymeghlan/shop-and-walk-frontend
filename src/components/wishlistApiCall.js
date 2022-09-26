@@ -39,9 +39,14 @@ export const wishlistDeleteApi = async (wishlistId,productId) => {
   return wishlistDeleteApi;
 };
 
-export const wishlistDeleteProductApi = async(id)=>{
+export const wishlistDeleteProductApi = async(id, products)=>{
+ 
+ console.log(id, products);
   const wishlistDeleteProductApi = await axios
-  .delete(`http://localhost:8080/wishlist/delete/${id}`)
+  .patch(`http://localhost:8080/wishlist/deleteselected`, {
+    wishlistId: id,
+    products
+  } )
   .then((res)=>{
     return res;
   });
