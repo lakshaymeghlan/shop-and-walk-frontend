@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "./redux/cart";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
-import { cartProductApi, cartDeleteApi,updateCart } from "./cartApicall";
+import { cartProductApi, cartDeleteApi, updateCart } from "./cartApicall";
 // import { useParams } from "react-router-dom";
 
 // const params = useParams()
@@ -12,6 +12,7 @@ const Cart = () => {
   const userId = User?.user?._id;
 
   const cart = useSelector((state) => state.cart);
+  console.log(cart)
   const dispatch = useDispatch();
 
   const deleteAll = (id) => {
@@ -24,7 +25,6 @@ const Cart = () => {
       setProductCart(res.data);
       console.log("-++++++++>", res.data);
     });
-
   }, []);
 
   // add and delete checkbox item in component part
@@ -70,22 +70,36 @@ const Cart = () => {
   //   }
   // };
 
-  const [quantity, setQuantity] = useState(1);
+  // const [quantity, setQuantity] = useState(1);
 
- 
+  const handleClick1 = (id, quantity) => {
+    // setQuantity((prevCount) => prevCount - 1);
+    if (quantity === 1) {
+      cartDeleteApi(productCart?.data[0]._id, id).then((resp) => {
+        if (resp)
+          cartProductApi(userId).then((res) => setProductCart(res.data));
+      });
+    } else {
+      updateCart(productCart?.data[0]._id, id, { quantity: quantity - 1 });
+    }
 
-  const handleClick1 = (id) => {
-    setQuantity((prevCount) => prevCount - 1);
-    updateCart(productCart?.data[0]._id, id,{"quantity":quantity})
-    console.log("----data-->",productCart.data)
+    cartProductApi(userId).then((res) => {
+      setProductCart(res.data);
+      console.log("-++++++++>", res.data);
+    });
   };
 
-  const handleClick = (id)=>{
-      setQuantity((prevCount) => prevCount + 1);
-      // updateCart(params.id,{"quantity":quantity})
-      updateCart(productCart?.data[0]._id, id,{"quantity":quantity})
-      
-  }
+  const handleClick = (id, quantity) => {
+    // setQuantity((prevCount) => prevCount + 1);
+    // updateCart(params.id,{"quantity":quantity})
+    updateCart(productCart?.data[0]._id, id, { quantity: quantity + 1 });
+    cartProductApi(userId).then((res) => {
+      setProductCart(res.data);
+      console.log("-++++++++>", res.data);
+    });
+  };
+
+  let total = 0
 
   return (
     <div div className="container">
@@ -112,6 +126,7 @@ const Cart = () => {
                 <h1>Loading...</h1>
               ) : (
                 productCart?.data[0].products.map((product, index) => (
+                  total = total + parseInt(product.productPrice)* product.quantity,
                   <tr
                     key={index}
                     style={{ fontWeight: "bold", color: "white" }}
@@ -127,22 +142,24 @@ const Cart = () => {
 
                     <td>
                       <FaRupeeSign />
-                      {product.productPrice * quantity}
+                      {product.productPrice * product.quantity}
                     </td>
 
                     {console.log(product.productPrice)}
 
                     <button
                       className="control__btn"
-                      onClick={() => handleClick(product._id)}
+                      onClick={() => handleClick(product._id, product.quantity)}
                     >
                       +
                     </button>
 
-                    {quantity}
+                    {product.quantity}
                     <button
                       className="control__btn"
-                      onClick={() => handleClick1(product._id)}
+                      onClick={() =>
+                        handleClick1(product._id, product.quantity)
+                      }
                     >
                       -
                     </button>
@@ -159,17 +176,18 @@ const Cart = () => {
               )}
             </tbody>
           </table>
+
           <button onClick={deleteAll}>Remove All</button>
           <button onClick={deleteCheckbox}>Remove CHECKBOX</button>
 
           <h3 style={{ fontWeight: "bold", color: "white" }}>
             {/* {console.log(cart)} */}
-            Grand Total :{" "}
-            {cart.reduce(
+            Grand Total :{" "}{total}
+            {/* {cart.reduce(
               (total, product) =>
-                total + Number(product.productPrice * quantity),
+                total + parseInt(product.productPrice) * product.quantity,
               0
-            )}
+            )} */}
           </h3>
         </>
       ) : (
