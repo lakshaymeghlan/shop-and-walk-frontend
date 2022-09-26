@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { wishlistAction } from "./redux/wishlist_redux";
 // import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
-import { wishlistProductApi, wishlistDeleteApi, wishlistDeleteProductApi} from "./wishlistApiCall";
+import {
+  wishlistProductApi,
+  wishlistDeleteApi,
+  wishlistDeleteProductApi,
+} from "./wishlistApiCall";
 
 const Wishlist = () => {
   var User = JSON.parse(localStorage.getItem("token"));
@@ -11,10 +15,6 @@ const Wishlist = () => {
 
   const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
-
-  // const deleteItem = (id) => {
-  //   dispatch(wishlistAction.remove(id));
-  // };
 
   const deleteAll = (id) => {
     dispatch(wishlistAction.reset(id));
@@ -26,28 +26,14 @@ const Wishlist = () => {
     // console.log(productWishlist)
   }, []);
 
-  const delete_product = (id)=>{
-    wishlistDeleteApi(productWishlist?.data[0]._id,id).then(resp=>{
-      if(resp)
-      wishlistProductApi(userId).then((res) => setProductWishlist(res.data));
-    })
-  }
+  const delete_product = (id) => {
+    wishlistDeleteApi(productWishlist?.data[0]._id, id).then((resp) => {
+      if (resp)
+        wishlistProductApi(userId).then((res) => setProductWishlist(res.data));
+    });
+  };
 
-  // add and delete checkbox item in component part
-  // const [deleteProducts, setDeleteProducts] = useState([]);
-  // const addProductToDeleteList = (product) => {
-  //   let exists = deleteProducts.find(
-  //     (currentProduct) => currentProduct._id === product._id
-  //   );
-  //   if (exists) {
-  //     let products = deleteProducts.filter((currentProduct) => {
-  //       return product._id != currentProduct._id;
-  //     });
-  //     setDeleteProducts(Array.from(new Set(products)));
-  //   } else {
-  //     setDeleteProducts(Array.from(new Set([...deleteProducts, product])));
-  //   }
-  // };
+  // add and delete using checkbox
 
   const [deleteProducts, setDeleteProducts] = useState([]);
   const addProductToDeleteList = (product) => {
@@ -64,13 +50,11 @@ const Wishlist = () => {
     }
   };
 
-  const deleteCheckbox = async() => {
-     
-     let result = await wishlistDeleteProductApi(userId, deleteProducts);
-     if(result){
-      setProductWishlist(result.products)
-     }
-    
+  const deleteCheckbox = async () => {
+    let result = await wishlistDeleteProductApi(userId, deleteProducts);
+    if (result) {
+      setProductWishlist(result.products);
+    }
   };
 
   return (
@@ -97,7 +81,6 @@ const Wishlist = () => {
               <h1>Loading...</h1>
             ) : (
               productWishlist?.data[0].products.map((product, index) => (
-
                 <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
                   <td>
                     {" "}
@@ -122,7 +105,13 @@ const Wishlist = () => {
                       // onClick={deleteItem.bind(this, product.productId)}
                       onClick={()=>wishlistDeleteProductApi(product._id)}
                     ></FaTrashAlt> */}
-                    <button type="submit" onClick={()=>delete_product(product._id)}> Delete</button>
+                    <button
+                      type="submit"
+                      onClick={() => delete_product(product._id)}
+                    >
+                      {" "}
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))
@@ -141,6 +130,3 @@ const Wishlist = () => {
 };
 
 export default Wishlist;
-
-
-

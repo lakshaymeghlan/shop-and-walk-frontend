@@ -48,3 +48,17 @@ export const updateCart = async (cartId, productId, data) => {
     });
   return updateCart;
 };
+
+export const cartDeleteProductApi = async(id, products)=>{
+ 
+  console.log(id, products);
+   const cartDeleteProductApi = await axios
+   .patch(`http://localhost:8080/cart/deleteselected`, {
+     cartId: id,
+     products
+   } )
+   .then((res)=>{
+     return res;
+   });
+   return cartDeleteProductApi;
+ }
