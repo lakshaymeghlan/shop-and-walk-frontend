@@ -3,26 +3,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "./redux/cart";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
-import { cartProductApi, cartDeleteApi } from "./cartApicall";
+import { cartProductApi, cartDeleteApi,updateCart } from "./cartApicall";
+// import { useParams } from "react-router-dom";
 
+// const params = useParams()
 const Cart = () => {
   var User = JSON.parse(localStorage.getItem("token"));
   const userId = User?.user?._id;
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
-  // const inc = (id) => {
-  //   dispatch(cartAction.inc(id));
-  // };
-
-  // const dec = (id) => {
-  //   dispatch(cartAction.dec(id));
-  // };
-
-  // const deleteItem = (id) => {
-  //   dispatch(cartAction.remove(id));
-  // };
 
   const deleteAll = (id) => {
     dispatch(cartAction.reset(id));
@@ -34,8 +24,7 @@ const Cart = () => {
       setProductCart(res.data);
       console.log("-++++++++>", res.data);
     });
-    // cartProductApi(userId).then((res) => setProductCart(res.data));
-    // console.log("-++++++++>",productCart);
+
   }, []);
 
   // add and delete checkbox item in component part
@@ -81,15 +70,22 @@ const Cart = () => {
   //   }
   // };
 
-  const [Quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(1);
 
-  const handleDecrement = () => {
+ 
+
+  const handleClick1 = (id) => {
     setQuantity((prevCount) => prevCount - 1);
+    updateCart(productCart?.data[0]._id, id,{"quantity":quantity})
+    console.log("----data-->",productCart.data)
   };
 
-  const handleIncrement = () => {
-    setQuantity((prevCount) => prevCount + 1);
-  };
+  const handleClick = (id)=>{
+      setQuantity((prevCount) => prevCount + 1);
+      // updateCart(params.id,{"quantity":quantity})
+      updateCart(productCart?.data[0]._id, id,{"quantity":quantity})
+      
+  }
 
   return (
     <div div className="container">
@@ -131,34 +127,22 @@ const Cart = () => {
 
                     <td>
                       <FaRupeeSign />
-                      {product.productPrice * Quantity}
+                      {product.productPrice * quantity}
                     </td>
 
                     {console.log(product.productPrice)}
-                    {/* <td>  */}
-                    {/* <FaRupeeSign />
-                    {parseFloat(product.productPrice) *
-                      parseFloat(product.productPrice)} */}
-                    {/* </td> 
-                   {console.log(e.amount)} 
-                   <td>  */}
-                    {/* <button onClick={dec.bind(this, index)}>-</button>{" "}
-                    {index.Quantity}{" "}
-                    <button onClick={inc.bind(this, index)}>+</button>
-                    
-                  </td>  */}
-                    {/* ------------------------------------------------------------------------- */}
+
                     <button
                       className="control__btn"
-                      onClick={() => handleIncrement(product._id)}
+                      onClick={() => handleClick(product._id)}
                     >
                       +
                     </button>
 
-                    {Quantity}
+                    {quantity}
                     <button
                       className="control__btn"
-                      onClick={() => handleDecrement(product._id)}
+                      onClick={() => handleClick1(product._id)}
                     >
                       -
                     </button>
@@ -182,7 +166,8 @@ const Cart = () => {
             {/* {console.log(cart)} */}
             Grand Total :{" "}
             {cart.reduce(
-              (total, product) => total + Number(product.productPrice * Quantity),
+              (total, product) =>
+                total + Number(product.productPrice * quantity),
               0
             )}
           </h3>

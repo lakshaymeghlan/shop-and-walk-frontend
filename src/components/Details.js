@@ -23,12 +23,14 @@ const Details = () => {
   }, []);
 
   //////////////////////////////////////////////////////////
+  
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
   const addToCart = async (product) => {
     // const isAdded = cart.some((id) => {
     //   return id === product.id;
     // });
+
     let data = {
       userId: userId,
       userEmail: userEmail,
@@ -37,6 +39,7 @@ const Details = () => {
           id: product.productId,
           productName: product.productName,
           productPrice: product.productPrice,
+          
         },
       ],
     };

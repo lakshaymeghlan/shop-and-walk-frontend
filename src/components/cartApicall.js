@@ -12,7 +12,7 @@ export const cartApiCall = async () => {
 export const cartSaveApiCall = async (data) => {
   const cartApiCall = await axios
     .post("http://localhost:8080/cart/addToCart", data)
-    .then(res => {
+    .then((res) => {
       return res;
     });
   return cartApiCall;
@@ -21,7 +21,7 @@ export const cartSaveApiCall = async (data) => {
 export const cartProductApi = async (userId) => {
   const cartProductApi = await axios
     .get(`http://localhost:8080/cart/cartProduct/${userId}`)
-    .then(res => {
+    .then((res) => {
       return res;
     });
   return cartProductApi;
@@ -29,18 +29,20 @@ export const cartProductApi = async (userId) => {
 
 export const cartDeleteApi = async (cartId, productId) => {
   const cartDeleteApi = await axios
-    .delete(
-      `http://localhost:8080/cart/delete/${cartId}/product/${productId}`)
+    .delete(`http://localhost:8080/cart/delete/${cartId}/product/${productId}`)
     .then((res) => {
       return res;
     });
   return cartDeleteApi;
 };
 
-export const updateCart = async (Id, productId) => {
+export const updateCart = async (cartId, productId, data) => {
+  // console.log(data)
   const updateCart = await axios
-    .delete(
-      `http://localhost:8080/cart/delete/${Id}/products/${productId}`)
+    .patch(
+      `http://localhost:8080/cart/updateQuantity/${cartId}/products/${productId}`,
+      data
+    )
     .then((res) => {
       return res;
     });
