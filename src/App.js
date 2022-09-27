@@ -11,12 +11,8 @@ import Footer from "./components/Footer";
 import Details from "./components/Details";
 import UserDetails from "./components/login/UserDetails";
 import Wishlist from "./components/Wishlist";
-// import productApiCall from './components/productApiCall';
-// import axios from "axios";
-// import {useDispatch} from "react-redux";
 
 function App() {
- 
   // useEffect( () => {
   //  (productApiCall())
   // }, []);

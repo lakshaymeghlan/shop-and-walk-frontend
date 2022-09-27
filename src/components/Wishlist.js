@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { wishlistAction } from "./redux/wishlist_redux";
-// import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
 import {
   wishlistProductApi,

@@ -6,7 +6,7 @@
   
   [data-theme="dark"] {
     --font-color: #eee;
-    --background-color: #333;
+    --background-color: rgb(23, 31, 39);
     --link-color: lightblue;
   }
   
@@ -19,12 +19,13 @@
     color: var(--link-color);
   }
   
-  /* Custom Dark Mode Toggle Element */
+  /* ----------------------------------------------- */
   
   .toggle-theme-wrapper {
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-right: 2rem;
   }
   
   .toggle-theme-wrapper span {
