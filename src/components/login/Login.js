@@ -8,12 +8,13 @@ import {
 } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
 
-
 function App() {
+
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const Login = async ()=> {
+  const Login = async () => {
     let item = { email, password };
 
     let result = await fetch("http://localhost:8080/auth/login-user", {
@@ -24,23 +25,23 @@ function App() {
         Accept: "application/json",
       },
     })
-    .then((res) => res.json())
-    .then((data) => {
-      console.log(data, "login successful");
-      if (data.status == "ok") {
-        alert("login successful");
-        window.localStorage.setItem("token", JSON.stringify({ ...data}));
-        // window.localStorage.setItem("user", JSON.stringify({ ...data}));
-        setEmail("");
-        setPassword("");
-        window.location.href = "./userDetails";
-      }else{
-        alert("login credentials are incorrect")
-      }
-    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data, "login successful");
+        if (data.status == "ok") {
+          alert("login successful");
+          window.localStorage.setItem("token", JSON.stringify({ ...data }));
+          // window.localStorage.setItem("user", JSON.stringify({ ...data}));
+          setEmail("");
+          setPassword("");
+          window.location.href = "./userDetails";
+        } else {
+          alert("login credentials are incorrect");
+        }
+      });
     result = await result.json();
-    localStorage.setItem("user-info", JSON.stringify(result));   
-  }
+    localStorage.setItem("user-info", JSON.stringify(result));
+  };
 
   return (
     <MDBContainer fluid className="p-3 my-5 h-custom">
@@ -81,7 +82,7 @@ function App() {
 
           <div className="text-center text-md-start mt-4 pt-2">
             <MDBBtn onClick={Login} className="mb-0 px-5 white" size="lg">
-            Login
+              Login
             </MDBBtn>
             <p className="small fw-bold mt-2 pt-1 mb-2 white">
               Don&apos;t have an account? <Link to="/Signup">Register </Link>

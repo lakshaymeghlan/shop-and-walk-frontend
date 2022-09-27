@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import { Link } from "react-router-dom";
 import photo from "../assest/cart.png";
 import { FaHeart } from "react-icons/fa";
-// import {useDispatch, useSelector} from 'react-redux'
+import DarkMode from "./darkmode/DarkMode";
 
 
 const Navbar = () => {
@@ -99,6 +99,8 @@ useEffect(()=>{
               </li>
               }
             </ul>
+
+            <DarkMode />
 
             <Link to ="/Wishlist" className="nav-items">
             <FaHeart size={30} className="whislist_nav">

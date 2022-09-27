@@ -166,3 +166,7 @@ body{
   margin-left: auto;
   margin-right: auto;
 }
+
+.toggle{
+  height: 30px;
+}
