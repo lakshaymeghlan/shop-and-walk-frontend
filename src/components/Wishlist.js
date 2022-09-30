@@ -6,6 +6,7 @@ import {
   wishlistProductApi,
   wishlistDeleteApi,
   wishlistDeleteProductApi,
+  wishlistProductDeleteApi
 } from "./wishlistApiCall";
 
 
@@ -15,10 +16,12 @@ const Wishlist = () => {
 
   const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
+  console.log(wishlist)
 
   const deleteAll = (id) => {
     dispatch(wishlistAction.reset(id));
   };
+  console.log(deleteAll)
 
   const [productWishlist, setProductWishlist] = useState();
   useEffect(() => {
@@ -59,8 +62,8 @@ const Wishlist = () => {
 
   return (
     <div  className="container">
-      {/* {wishlist.length !== 0 ? ( */}
-        <>
+       {/* {wishlist.length !== 0 ? (  */}
+        <div>
           <table
             style={{
               width: "100%",
@@ -73,8 +76,6 @@ const Wishlist = () => {
               <th>Name</th>
               <th>Price</th>
               <th>Action</th>
-
-              {/* <th>Action</th> */}
             </tr>
 
             {productWishlist === undefined ? (
@@ -113,11 +114,14 @@ const Wishlist = () => {
               ))
             )}
           </table>
-          <button className="button_rev" onClick={deleteAll}>Remove All</button>
+          {  productWishlist?.data[0].products.length > 0 ?<> <button className="button_rev" onClick={()=>(wishlistProductDeleteApi(productWishlist?.data[0]._id),window.location.reload())}>Remove All</button>
 
-          <button className="button_rev" onClick={deleteCheckbox}>Remove Selected</button>
-        </>
-     
+          <button className="button_rev" onClick={deleteCheckbox}>Remove Selected</button> </>: <h1>EMPTY CART</h1>}
+        </div>
+       
+         {/* ) : (
+            <p style={{ fontWeight: "bold", color: "white" }}>Empty Cart</p>
+          )}  */}
     </div>
   );
 };
