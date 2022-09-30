@@ -3,9 +3,7 @@ import cart from "./cart";
 import wishlist from "./wishlist_redux";
 
 const store = configureStore({
-  reducer: { cart, wishlist }
+  reducer: { cart, wishlist },
 });
-
-
 
 export default store;

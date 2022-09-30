@@ -10,6 +10,13 @@ import { Link } from "react-router-dom";
 
 function App() {
 
+  // var salt = bcrypt.genSaltSync(10);
+// var hash = bcrypt.hashSync("1234", salt);
+
+// // console.log("======THis is hashing password======",hash)
+
+// // console.log("====comparing passwrod=====",bcrypt.compareSync("12", hash))
+
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

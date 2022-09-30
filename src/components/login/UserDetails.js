@@ -34,12 +34,14 @@ const UserDetails = () => {
 }, [])
     
     return (
+      <div className="container">
       <div className="user_det">
         Name<h1>{userName}</h1>
         Email <h1>{userEmail}</h1>
 
-        <button onClick={()=>{localStorage.clear();
+        <button className="button_rev" onClick={()=>{localStorage.clear();
   navigate("/login")}}>logout</button>
+      </div>
       </div>
     );
 }

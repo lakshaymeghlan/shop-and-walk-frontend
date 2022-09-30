@@ -1,6 +1,6 @@
 :root {
     --font-color: #333;
-    --background-color: #eee;
+    --background-color: rgb(212, 212, 212);;
     --link-color: cornflowerblue;
   }
   
@@ -8,6 +8,13 @@
     --font-color: #eee;
     --background-color: rgb(23, 31, 39);
     --link-color: lightblue;
+  }
+
+  [light-theme="light"] {
+    --font-color: #0000;
+    --background-color: rgb(212, 212, 212);
+    --link-color: lightblue;
+    
   }
   
   body {

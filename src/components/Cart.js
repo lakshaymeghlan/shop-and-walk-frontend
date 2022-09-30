@@ -173,8 +173,8 @@ const Cart = () => {
             </tbody>
           </table>
 
-          <button onClick={deleteAll}>Remove All</button>
-          <button onClick={deleteCheckbox}>Remove CHECKBOX</button>
+          <button className="button_rev" onClick={deleteAll}>Remove All</button>
+          <button className="button_rev" onClick={deleteCheckbox}>Remove CHECKBOX</button>
 
           <h3 style={{ fontWeight: "bold", color: "white" }}>
             {/* {console.log(cart)} */}

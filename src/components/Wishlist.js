@@ -8,6 +8,7 @@ import {
   wishlistDeleteProductApi,
 } from "./wishlistApiCall";
 
+
 const Wishlist = () => {
   var User = JSON.parse(localStorage.getItem("token"));
   const userId = User?.user?._id;
@@ -57,8 +58,8 @@ const Wishlist = () => {
   };
 
   return (
-    <div div className="container">
-      {wishlist.length !== 0 ? (
+    <div  className="container">
+      {/* {wishlist.length !== 0 ? ( */}
         <>
           <table
             style={{
@@ -99,11 +100,7 @@ const Wishlist = () => {
                   </td>
 
                   <td>
-                    {/* <FaTrashAlt
-                      className="trash"
-                      // onClick={deleteItem.bind(this, product.productId)}
-                      onClick={()=>wishlistDeleteProductApi(product._id)}
-                    ></FaTrashAlt> */}
+                   
                     <button
                       type="submit"
                       onClick={() => delete_product(product._id)}
@@ -116,14 +113,11 @@ const Wishlist = () => {
               ))
             )}
           </table>
-          <button onClick={deleteAll}>Remove All</button>
+          <button className="button_rev" onClick={deleteAll}>Remove All</button>
 
-          {/* TODO @lakshay button should be visible only when item is checked and vice versa */}
-          <button onClick={deleteCheckbox}>Remove Selected</button>
+          <button className="button_rev" onClick={deleteCheckbox}>Remove Selected</button>
         </>
-      ) : (
-        <p style={{ fontWeight: "bold", color: "white" }}>Empty Wishlist</p>
-      )}
+     
     </div>
   );
 };

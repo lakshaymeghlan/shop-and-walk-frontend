@@ -136,8 +136,8 @@ const Details = () => {
 
                     <h2>{productDetails.productPrice}</h2>
                     <Link to="/cart">
-                      <button
-                        className="sign_up"
+                      <button 
+                        className="sign_up button_rev"
                         onClick={addToCart.bind(this, productDetails)}
                       >
                         Buy Now
