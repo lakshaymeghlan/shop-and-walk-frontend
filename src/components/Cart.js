@@ -8,6 +8,7 @@ import {
   cartDeleteApi,
   updateCart,
   cartDeleteProductApi,
+  cartProductDeleteApi,
 } from "./cartApicall";
 // import { useParams } from "react-router-dom";
 
@@ -18,10 +19,12 @@ const Cart = () => {
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  console.log(cart);
 
   const deleteAll = (id) => {
     dispatch(cartAction.reset(id));
   };
+  console.log(deleteAll);
 
   const [productCart, setProductCart] = useState();
   useEffect(() => {
@@ -91,104 +94,117 @@ const Cart = () => {
 
   return (
     <div div className="container">
-      {cart.length !== 0 ? (
-        <>
-          <table
-            style={{
-              width: "100%",
-              margin: "30px 0",
-              borderCollapse: "collapse",
-            }}
-          >
-            <tbody>
-              <tr style={{ fontWeight: "bold", color: "white" }}>
-                {/* <th>Id</th> */}
-                <th></th>
-                <th>id</th>
-                <th>Name</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Action</th>
-              </tr>
-              {productCart === undefined ? (
-                <h1>Loading...</h1>
-              ) : (
-                productCart?.data[0].products.map(
-                  (product, index) => (
-                    (total =
-                      total +
-                      parseInt(product.productPrice) * product.quantity),
-                    (
-                      <tr
-                        key={index}
-                        style={{ fontWeight: "bold", color: "white" }}
+      {/* {cart.length !== 0 ? ( */}
+      <>
+        <table
+          style={{
+            width: "100%",
+            margin: "30px 0",
+            borderCollapse: "collapse",
+          }}
+        >
+          <tbody>
+            <tr style={{ fontWeight: "bold", color: "white" }}>
+              {/* <th>Id</th> */}
+              <th></th>
+              <th>id</th>
+              <th>Name</th>
+              <th>Price</th>
+              <th>Quantity</th>
+              <th>Action</th>
+            </tr>
+            {productCart === undefined ? (
+              <h1>Loading...</h1>
+            ) : (
+              productCart?.data[0].products.map(
+                (product, index) => (
+                  (total =
+                    total + parseInt(product.productPrice) * product.quantity),
+                  (
+                    <tr
+                      key={index}
+                      style={{ fontWeight: "bold", color: "white" }}
+                    >
+                      <input
+                        onChange={() => {
+                          addProductToDeleteList(product);
+                        }}
+                        type="checkbox"
+                      />
+                      <td>{index}</td>
+                      <td>{product.productName}</td>
+
+                      <td>
+                        <FaRupeeSign />
+                        {product.productPrice * product.quantity}
+                      </td>
+
+                      {console.log(product.productPrice)}
+
+                      <button
+                        className="control__btn"
+                        onClick={() =>
+                          handleClick(product._id, product.quantity)
+                        }
                       >
-                        <input
-                          onChange={() => {
-                            addProductToDeleteList(product);
-                          }}
-                          type="checkbox"
-                        />
-                        <td>{index}</td>
-                        <td>{product.productName}</td>
+                        +
+                      </button>
 
-                        <td>
-                          <FaRupeeSign />
-                          {product.productPrice * product.quantity}
-                        </td>
-
-                        {console.log(product.productPrice)}
-
-                        <button
-                          className="control__btn"
-                          onClick={() =>
-                            handleClick(product._id, product.quantity)
-                          }
-                        >
-                          +
-                        </button>
-
-                        {product.quantity}
-                        <button
-                          className="control__btn"
-                          onClick={() =>
-                            handleClick1(product._id, product.quantity)
-                          }
-                        >
-                          -
-                        </button>
-                        <td>
-                          <FaTrashAlt
-                            className="trash"
-                            type="submit"
-                            onClick={() => delete_product(product._id)}
-                          ></FaTrashAlt>
-                        </td>
-                      </tr>
-                    )
-                    // </div>
+                      {product.quantity}
+                      <button
+                        className="control__btn"
+                        onClick={() =>
+                          handleClick1(product._id, product.quantity)
+                        }
+                      >
+                        -
+                      </button>
+                      <td>
+                        <FaTrashAlt
+                          className="trash"
+                          type="submit"
+                          onClick={() => delete_product(product._id)}
+                        ></FaTrashAlt>
+                      </td>
+                    </tr>
                   )
+                  // </div>
                 )
+              )
+            )}
+          </tbody>
+        </table>
+
+        {productCart?.data[0].products.length > 0 ? (
+          <>
+            {" "}
+            <button
+              className="button_rev"
+              onClick={() => (
+                cartProductDeleteApi(productCart?.data[0]._id),
+                window.location.reload()
               )}
-            </tbody>
-          </table>
+            >
+              Remove All
+            </button>
+            <button className="button_rev" onClick={deleteCheckbox}>
+              Remove CHECKBOX
+            </button>{" "}
+          </>
+        ) : (
+          <h1>EMPTY CART</h1>
+        )}
 
-          <button className="button_rev" onClick={deleteAll}>Remove All</button>
-          <button className="button_rev" onClick={deleteCheckbox}>Remove CHECKBOX</button>
-
-          <h3 style={{ fontWeight: "bold", color: "white" }}>
-            {/* {console.log(cart)} */}
-            Grand Total : {total}
-            {/* {cart.reduce(
+        <h3 style={{ fontWeight: "bold", color: "white" }}>
+          {/* {console.log(cart)} */}
+          Grand Total : {total}
+          {/* {cart.reduce(
               (total, product) =>
                 total + parseInt(product.productPrice) * product.quantity,
               0
             )} */}
-          </h3>
-        </>
-      ) : (
-        <p style={{ fontWeight: "bold", color: "white" }}>Empty Cart</p>
-      )}
+        </h3>
+      </>
     </div>
   );
 };

@@ -6,9 +6,8 @@ import {
   wishlistProductApi,
   wishlistDeleteApi,
   wishlistDeleteProductApi,
-  wishlistProductDeleteApi
+  wishlistProductDeleteApi,
 } from "./wishlistApiCall";
-
 
 const Wishlist = () => {
   var User = JSON.parse(localStorage.getItem("token"));
@@ -16,12 +15,12 @@ const Wishlist = () => {
 
   const wishlist = useSelector((state) => state.wishlist);
   const dispatch = useDispatch();
-  console.log(wishlist)
+  console.log(wishlist);
 
   const deleteAll = (id) => {
     dispatch(wishlistAction.reset(id));
   };
-  console.log(deleteAll)
+  console.log(deleteAll);
 
   const [productWishlist, setProductWishlist] = useState();
   useEffect(() => {
@@ -61,67 +60,78 @@ const Wishlist = () => {
   };
 
   return (
-    <div  className="container">
-       {/* {wishlist.length !== 0 ? (  */}
-        <div>
-          <table
-            style={{
-              width: "100%",
-              margin: "30px 0",
-              borderCollapse: "collapse",
-            }}
-          >
-            <tr style={{ fontWeight: "bold", color: "white" }}>
-              <th>Id</th>
-              <th>Name</th>
-              <th>Price</th>
-              <th>Action</th>
-            </tr>
+    <div className="container">
+      {/* {wishlist.length !== 0 ? (  */}
+      <div>
+        <table
+          style={{
+            width: "100%",
+            margin: "30px 0",
+            borderCollapse: "collapse",
+          }}
+        >
+          <tr style={{ fontWeight: "bold", color: "white" }}>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Action</th>
+          </tr>
 
-            {productWishlist === undefined ? (
-              <h1>Loading...</h1>
-            ) : (
-              productWishlist?.data[0].products.map((product, index) => (
-                <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
-                  <td>
+          {productWishlist === undefined ? (
+            <h1>Loading...</h1>
+          ) : (
+            productWishlist?.data[0].products.map((product, index) => (
+              <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
+                <td>
+                  {" "}
+                  <input
+                    onChange={() => {
+                      addProductToDeleteList(product);
+                    }}
+                    type="checkbox"
+                  />{" "}
+                  {index}
+                </td>
+                <td>{product.productName}</td>
+
+                <td>
+                  <FaRupeeSign />
+                  {product.productPrice}
+                </td>
+
+                <td>
+                  <button
+                    type="submit"
+                    onClick={() => delete_product(product._id)}
+                  >
                     {" "}
-                    <input
-                      onChange={() => {
-                        addProductToDeleteList(product);
-                      }}
-                      type="checkbox"
-                    />{" "}
-                    {index}
-                  </td>
-                  <td>{product.productName}</td>
-
-                  <td>
-                    <FaRupeeSign />
-                    {product.productPrice}
-                  </td>
-
-                  <td>
-                   
-                    <button
-                      type="submit"
-                      onClick={() => delete_product(product._id)}
-                    >
-                      {" "}
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </table>
-          {  productWishlist?.data[0].products.length > 0 ?<> <button className="button_rev" onClick={()=>(wishlistProductDeleteApi(productWishlist?.data[0]._id),window.location.reload())}>Remove All</button>
-
-          <button className="button_rev" onClick={deleteCheckbox}>Remove Selected</button> </>: <h1>EMPTY CART</h1>}
-        </div>
-       
-         {/* ) : (
-            <p style={{ fontWeight: "bold", color: "white" }}>Empty Cart</p>
-          )}  */}
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
+        </table>
+        {productWishlist?.data[0].products.length > 0 ? (
+          <>
+            {" "}
+            <button
+              className="button_rev"
+              onClick={() => (
+                wishlistProductDeleteApi(productWishlist?.data[0]._id),
+                window.location.reload()
+              )}
+            >
+              Remove All
+            </button>
+            <button className="button_rev" onClick={deleteCheckbox}>
+              Remove CHECKBOX
+            </button>{" "}
+          </>
+        ) : (
+          <h1>EMPTY CART</h1>
+        )}
+      </div>
     </div>
   );
 };

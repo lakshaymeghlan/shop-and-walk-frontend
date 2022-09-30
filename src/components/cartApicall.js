@@ -62,3 +62,12 @@ export const cartDeleteProductApi = async(id, products)=>{
    });
    return cartDeleteProductApi;
  }
+
+ export const cartProductDeleteApi = async (id) => {
+  const cartProductDeleteApi = await axios
+    .delete(`http://localhost:8080/cart/delete/${id}`)
+    .then((res) => {
+      return res;
+    });
+  return cartProductDeleteApi;
+};
