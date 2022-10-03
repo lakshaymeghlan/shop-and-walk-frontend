@@ -129,7 +129,7 @@ const Wishlist = () => {
             </button>{" "}
           </>
         ) : (
-          <h1>EMPTY CART</h1>
+          <h1>EMPTY WISHLIST</h1>
         )}
       </div>
     </div>

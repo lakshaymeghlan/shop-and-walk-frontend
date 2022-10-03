@@ -3,10 +3,11 @@ import {
   MDBContainer,
   MDBCol,
   MDBRow,
-  MDBBtn,
+  // MDBBtn,
   MDBInput,
 } from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
+// import bcrypt from "bcryptjs"
 
 function App() {
 
@@ -50,6 +51,11 @@ function App() {
     localStorage.setItem("user-info", JSON.stringify(result));
   };
 
+  // const hashingPassword = (e) =>{
+  //   const salt = bcrypt.genSaltSync(10);
+  //   setPassword(bcrypt.hashSync(e.target.value,))
+  // }
+
   return (
     <MDBContainer fluid className="p-3 my-5 h-custom">
       <MDBRow>
@@ -88,9 +94,9 @@ function App() {
           />
 
           <div className="text-center text-md-start mt-4 pt-2">
-            <MDBBtn onClick={Login} className="mb-0 px-5 white" size="lg">
+            <button onClick={Login} className="mb-0 px-5 button_rev" size="lg">
               Login
-            </MDBBtn>
+            </button>
             <p className="small fw-bold mt-2 pt-1 mb-2 white">
               Don&apos;t have an account? <Link to="/Signup">Register </Link>
             </p>

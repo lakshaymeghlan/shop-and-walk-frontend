@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import {
-  MDBBtn,
+  // MDBBtn,
   MDBContainer,
   MDBRow,
   MDBCol,
@@ -115,9 +115,9 @@ function App() {
                 />
               </div>
 
-              <MDBBtn onClick={signUp} className="mb-4" size="lg">
+              <button onClick={signUp} className="mb-4 button_rev" size="lg">
                 Register
-              </MDBBtn>
+              </button>
 
               <h6 className="mb-4">
                 Already Register ? <Link to="/Login">Login</Link>
