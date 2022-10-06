@@ -1,98 +1,110 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
+import {
+  MDBContainer,
+  MDBCol,
+  MDBRow,
+  // MDBBtn,
+  MDBInput,
+} from "mdb-react-ui-kit";
 import { Link } from "react-router-dom";
+// import bcrypt from "bcryptjs"
 
-export default class Login extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      email: "",
-      password: "",
-    };
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
-  handleSubmit(e) {
-    e.preventDefault();
-    const { email, password } = this.state;
-    console.log(email, password);
-    fetch("http://localhost:8080/auth/login-user", {
+function App() {
+
+  // var salt = bcrypt.genSaltSync(10);
+// var hash = bcrypt.hashSync("1234", salt);
+
+// // console.log("======THis is hashing password======",hash)
+
+// // console.log("====comparing passwrod=====",bcrypt.compareSync("12", hash))
+
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const Login = async () => {
+    let item = { email, password };
+
+    let result = await fetch("http://localhost:8080/auth/login-user", {
       method: "POST",
-      crossDomain: true,
+      body: JSON.stringify(item),
       headers: {
-        "Content-Type": "application/json",
+        "content-Type": "application/json",
         Accept: "application/json",
-        "Access-Control-Allow-Origin": "*",
       },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
     })
       .then((res) => res.json())
-
       .then((data) => {
-        console.log(data, "userRegister");
+        console.log(data, "login successful");
         if (data.status == "ok") {
           alert("login successful");
-          window.localStorage.setItem("token", JSON.stringify({ ...data}));
+          window.localStorage.setItem("token", JSON.stringify({ ...data }));
+          // window.localStorage.setItem("user", JSON.stringify({ ...data}));
+          setEmail("");
+          setPassword("");
           window.location.href = "./userDetails";
+        } else {
+          alert("login credentials are incorrect");
         }
       });
-  }
+    result = await result.json();
+    localStorage.setItem("user-info", JSON.stringify(result));
+  };
 
-  render() {
-    return (
-      <div className="container">
-        <form onSubmit={this.handleSubmit}>
-          <h3 className="log_in">Sign In</h3>
+  // const hashingPassword = (e) =>{
+  //   const salt = bcrypt.genSaltSync(10);
+  //   setPassword(bcrypt.hashSync(e.target.value,))
+  // }
 
-          <div className="mb-3 ">
-            <label className="log_in">Email address</label>
-            <input
-              type="email"
-              className="form-control"
-              placeholder="Enter email"
-              onChange={(e) => this.setState({ email: e.target.value })}
-            />
+  return (
+    <MDBContainer fluid className="p-3 my-5 h-custom">
+      <MDBRow>
+        <MDBCol col="10" md="6">
+          <img
+            src="https://w0.peakpx.com/wallpaper/947/764/HD-wallpaper-nike-air-ultra-aero-vector-art-artwork-illustrator-anime-shoe-shoes-wear-sportswear.jpg"
+            className="img-fluid"
+            alt="Sample image"
+          />
+        </MDBCol>
+
+        <MDBCol col="4" md="6">
+          <div className="d-flex flex-row align-items-center justify-content-center">
+            <h1 className=" white">Log In</h1>
           </div>
 
-          <div className="mb-3">
-            <label className="log_in">Password</label>
-            <input
-              type="password"
-              className="form-control"
-              placeholder="Enter password"
-              onChange={(e) => this.setState({ password: e.target.value })}
-            />
-          </div>
+          <div className="divider d-flex align-items-center my-4"></div>
 
-          <div className="mb-3">
-            <div className="custom-control custom-checkbox">
-              <input
-                type="checkbox"
-                className="custom-control-input"
-                id="customCheck1"
-              />
-              <label
-                className="custom-control-label log_in "
-                htmlFor="customCheck1"
-              >
-                Remember me
-              </label>
-            </div>
-          </div>
+          <MDBInput
+            wrapperClass="mb-4"
+            label="Email address"
+            id="formControlLg"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            size="lg"
+          />
+          <MDBInput
+            wrapperClass="mb-4"
+            label="Password"
+            id="formControlLg"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            type="password"
+            size="lg"
+          />
 
-          <div className="d-grid">
-            <button type="submit" className="btn btn-primary">
-              Submit
+          <div className="text-center text-md-start mt-4 pt-2">
+            <button onClick={Login} className="mb-0 px-5 button_rev" size="lg">
+              Login
             </button>
+            <p className="small fw-bold mt-2 pt-1 mb-2 white">
+              Don&apos;t have an account? <Link to="/Signup">Register </Link>
+            </p>
           </div>
-          <p className="forgot-password text-right">
-            <Link to="/Signup">
-              <button className="sign_up">Sign Up</button>
-            </Link>
-          </p>
-        </form>
-      </div>
-    );
-  }
+        </MDBCol>
+      </MDBRow>
+    </MDBContainer>
+  );
 }
+
+export default App;

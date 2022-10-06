@@ -3,108 +3,208 @@ import { useDispatch, useSelector } from "react-redux";
 import { cartAction } from "./redux/cart";
 import { FaTrashAlt } from "react-icons/fa";
 import { FaRupeeSign } from "react-icons/fa";
-import { cartProductApi } from "./cartApicall";
-import { useParams } from "react-router";
+import {
+  cartProductApi,
+  cartDeleteApi,
+  updateCart,
+  cartDeleteProductApi,
+  cartProductDeleteApi,
+} from "./cartApicall";
+// import { useParams } from "react-router-dom";
 
+// const params = useParams()
 const Cart = () => {
   var User = JSON.parse(localStorage.getItem("token"));
-  const userId = User.data._id;
+  const userId = User?.user?._id;
 
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-
-  const inc = (id) => {
-    dispatch(cartAction.inc(id));
-  };
-
-  const dec = (id) => {
-    dispatch(cartAction.dec(id));
-  };
-
-  const deleteItem = (id) => {
-    dispatch(cartAction.remove(id));
-  };
+  console.log(cart);
 
   const deleteAll = (id) => {
     dispatch(cartAction.reset(id));
   };
+  console.log(deleteAll);
 
   const [productCart, setProductCart] = useState();
   useEffect(() => {
-    cartProductApi(userId).then((res) => setProductCart(res));
+    cartProductApi(userId).then((res) => {
+      setProductCart(res.data);
+      // console.log("-++++++++>", res.data);
+    });
   }, []);
 
-  const { product_id } = useParams();
-  console.log(product_id);
+  // add and delete checkbox item in component part
+  const [deleteProducts, setDeleteProducts] = useState([]);
+  const addProductToDeleteList = (product) => {
+    let exists = deleteProducts.find(
+      (currentProduct) => currentProduct === product._id
+    );
+    if (exists) {
+      let products = deleteProducts.filter((currentProduct) => {
+        return product._id != currentProduct;
+      });
+      setDeleteProducts(Array.from(new Set(products)));
+    } else {
+      setDeleteProducts(Array.from(new Set([...deleteProducts, product._id])));
+    }
+  };
+
+  const deleteCheckbox = async () => {
+    let result = await cartDeleteProductApi(userId, deleteProducts);
+    if (result) {
+      setProductCart(result.products);
+    }
+  };
+
+  const delete_product = (id) => {
+    cartDeleteApi(productCart?.data[0]._id, id).then((resp) => {
+      if (resp) cartProductApi(userId).then((res) => setProductCart(res.data));
+    });
+  };
+
+  const handleClick1 = (id, quantity) => {
+    // setQuantity((prevCount) => prevCount - 1);
+    if (quantity === 1) {
+      cartDeleteApi(productCart?.data[0]._id, id).then((resp) => {
+        if (resp)
+          cartProductApi(userId).then((res) => setProductCart(res.data));
+      });
+    } else {
+      updateCart(productCart?.data[0]._id, id, { quantity: quantity - 1 });
+    }
+
+    cartProductApi(userId).then((res) => {
+      setProductCart(res.data);
+      console.log("-++++++++>", res.data);
+    });
+  };
+
+  const handleClick = (id, quantity) => {
+    // setQuantity((prevCount) => prevCount + 1);
+    // updateCart(params.id,{"quantity":quantity})
+    updateCart(productCart?.data[0]._id, id, { quantity: quantity + 1 });
+    cartProductApi(userId).then((res) => {
+      setProductCart(res.data);
+      console.log("-++++++++>", res.data);
+    });
+  };
+
+  let total = 0;
 
   return (
     <div div className="container">
-      {cart.length !== 0 ? (
-        <>
-          <table
-            style={{
-              width: "100%",
-              margin: "30px 0",
-              borderCollapse: "collapse",
-            }}
-          >
+      {/* {cart.length !== 0 ? ( */}
+      <>
+        <table
+          style={{
+            width: "100%",
+            margin: "30px 0",
+            borderCollapse: "collapse",
+          }}
+        >
+          <tbody>
             <tr style={{ fontWeight: "bold", color: "white" }}>
-              <th>Id</th>
+              {/* <th>Id</th> */}
+              <th></th>
+              <th>id</th>
               <th>Name</th>
               <th>Price</th>
-              <th>Total Price</th>
-              <th>Amount</th>
-              {/* <th>Action</th> */}
+              <th>Quantity</th>
+              <th>Action</th>
             </tr>
-
             {productCart === undefined ? (
               <h1>Loading...</h1>
             ) : (
-              productCart.data.map((product, index) => (
-                // <div key={cart}>
-                <tr key={index} style={{ fontWeight: "bold", color: "white" }}>
-                  <td>{index}</td>
-                  <td>{product.productName}</td>
+              productCart?.data[0].products.map(
+                (product, index) => (
+                  (total =
+                    total + parseInt(product.productPrice) * product.quantity),
+                  (
+                    <tr
+                      key={index}
+                      style={{ fontWeight: "bold", color: "white" }}
+                    >
+                      <input
+                        onChange={() => {
+                          addProductToDeleteList(product);
+                        }}
+                        type="checkbox"
+                      />
+                      <td>{index}</td>
+                      <td>{product.productName}</td>
 
-                  <td>
-                    <FaRupeeSign />
-                    {product.productPrice}
-                  </td>
+                      <td>
+                        <FaRupeeSign />
+                        {product.productPrice * product.quantity}
+                      </td>
 
-                  <td>
-                    <FaRupeeSign />
-                    {parseFloat(product.productPrice) *
-                      parseFloat(product.productPrice)}
-                  </td>
-                  {/* {console.log(e.amount)} */}
-                  <td>
-                    <button onClick={dec.bind(this, index)}>-</button>{" "}
-                    {index.amount}{" "}
-                    <button onClick={inc.bind(this, index)}>+</button>
-                  </td>
-                  <td>
-                    <FaTrashAlt
-                      className="trash"
-                      onClick={deleteItem.bind(this, product.id)}
-                    ></FaTrashAlt>
-                  </td>
-                </tr>
-                // </div>
-              ))
+                      {console.log(product.productPrice)}
+
+                      <button
+                        className="control__btn"
+                        onClick={() =>
+                          handleClick(product._id, product.quantity)
+                        }
+                      >
+                        +
+                      </button>
+
+                      {product.quantity}
+                      <button
+                        className="control__btn"
+                        onClick={() =>
+                          handleClick1(product._id, product.quantity)
+                        }
+                      >
+                        -
+                      </button>
+                      <td>
+                        <FaTrashAlt
+                          className="trash"
+                          type="submit"
+                          onClick={() => delete_product(product._id)}
+                        ></FaTrashAlt>
+                      </td>
+                    </tr>
+                  )
+                  // </div>
+                )
+              )
             )}
-          </table>
-          <button onClick={deleteAll}>Remove All</button>
-          <h3 style={{ fontWeight: "bold", color: "white" }}>
-            Grand Total :{" "}
-            {cart.reduce(
-              (product, item) => product + item.price * item.amount,
+          </tbody>
+        </table>
+
+        {productCart?.data[0].products.length > 0 ? (
+          <>
+            {" "}
+            <button
+              className="button_rev"
+              onClick={() => (
+                cartProductDeleteApi(productCart?.data[0]._id),
+                window.location.reload()
+              )}
+            >
+              Remove All
+            </button>
+            <button className="button_rev" onClick={deleteCheckbox}>
+              Remove CHECKBOX
+            </button>{" "}
+          </>
+        ) : (
+          <h1>EMPTY CART</h1>
+        )}
+
+        <h3 style={{ fontWeight: "bold", color: "white" }}>
+          {/* {console.log(cart)} */}
+          Grand Total : {total}
+          {/* {cart.reduce(
+              (total, product) =>
+                total + parseInt(product.productPrice) * product.quantity,
               0
-            )}
-          </h3>
-        </>
-      ) : (
-        <p style={{ fontWeight: "bold", color: "white" }}>Empty Cart</p>
-      )}
+            )} */}
+        </h3>
+      </>
     </div>
   );
 };

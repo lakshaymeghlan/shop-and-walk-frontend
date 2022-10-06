@@ -7,28 +7,19 @@ import {
 
  function Footer() {
   return (
-    <footer>
+    <footer className='foot_er'>
     <MDBFooter className='bg-dark text-center text-white'>
       <MDBContainer className='p-4 pb-0'>
         <section className='mb-4'>
-          <a className='btn  btn-floating m-1' href='#!' role='button'>
-          <SocialIcon url="https://facebook.com/jaketrent"/>
-          </a>
+          <button className='btn  btn-floating m-1'><SocialIcon url="https://facebook.com/jaketrent"/></button>
 
-          <a className='btn  btn-floating m-1' href='#!' role='button'>
-          <SocialIcon url="https://discord.com/jaketrent"/>
-          </a>
+          <button className='btn  btn-floating m-1'><SocialIcon url="https://discord.com/jaketrent"/></button>
 
-          <a className='btn  btn-floating m-1' href='#!' role='button'>
-          <SocialIcon url="https://google.com/jaketrent"/>
-          </a>
-          <a className='btn  btn-floating m-1' href='#!' role='button'>
-          <SocialIcon url="https://instagram.com/jaketrent"/>
-          </a>
+          <button className='btn  btn-floating m-1'><SocialIcon url="https://google.com/jaketrent"/></button>
 
-          <a className='btn  btn-floating m-1' href='#!' role='button'>
-          <SocialIcon url="https://twitter.com/jaketrent"/>
-          </a>
+          <button className='btn  btn-floating m-1'><SocialIcon url="https://instagram.com/lakshaymeghlan"/></button>
+
+          <button className='btn  btn-floating m-1'><SocialIcon url="https://twitter.com/Lakshay_meghlan"/></button>
         </section>
       </MDBContainer>
 

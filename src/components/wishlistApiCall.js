@@ -9,16 +9,55 @@ export const wishlistApiCall = async () => {
   return wishlistCall;
 };
 
-export const wishlistSaveApi = async (product) => {
+export const wishlistSaveApi = async (data) => {
+  console.log(data);wishlistSaveApi
   const wishlistCall = await axios
-    .post("http://localhost:8080/wishlist/wishlist", product)
-    .then(console.log(product));
+    .post("http://localhost:8080/wishlist/create", data)
+    .then(res => {
+      return res; 
+    });
   return wishlistCall;
 };
 
 export const wishlistProductApi = async (userId) => {
-    const wishlistProductApi = await axios
-      .get(`http://localhost:8080/wishlist/wishlistProduct/${userId}`)
-      .then((res)=>{return(res)});
-    return wishlistProductApi;
-  };
+  const wishlistProductApi = await axios
+    .get(`http://localhost:8080/wishlist/${userId}`)
+    .then((res) => {
+      return res;
+    });
+  return wishlistProductApi;
+};
+
+
+export const wishlistDeleteApi = async (wishlistId,productId) => {
+  // console.log(`http://localhost:8080/wishlist/delete/${wishlistId}/products/${productId}`)
+  const wishlistDeleteApi = await axios
+    .delete(`http://localhost:8080/wishlist/delete/${wishlistId}/products/${productId}`)
+    .then((res) => {
+      return res;
+    });
+  return wishlistDeleteApi;
+};
+
+export const wishlistProductDeleteApi = async (id) => {
+  const wishlistProductDeleteApi = await axios
+    .delete(`http://localhost:8080/wishlist/delete/${id}`)
+    .then((res) => {
+      return res;
+    });
+  return wishlistProductDeleteApi;
+};
+
+export const wishlistDeleteProductApi = async(id, products)=>{
+ 
+ console.log(id, products);
+  const wishlistDeleteProductApi = await axios
+  .patch(`http://localhost:8080/wishlist/deleteselected`, {
+    wishlistId: id,
+    products
+  } )
+  .then((res)=>{
+    return res;
+  });
+  return wishlistDeleteProductApi;
+}

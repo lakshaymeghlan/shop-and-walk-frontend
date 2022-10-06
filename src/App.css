@@ -39,6 +39,9 @@
 
 body{
   background-color: #171f27;
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
 }
 
 .navbar{
@@ -120,3 +123,87 @@ body{
 /* .FaHeart{
   color:red;
 } */
+
+.signup_1{
+  background-color: #27333f;
+  border-radius: 2rem;
+}
+.mb-4,.head{
+  color: white;
+}
+
+.goTo{
+  background-color: #5b5e62;
+  color: white;
+ border-radius: 6px;
+}
+
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.h-custom {
+  height: calc(100% - 73px);
+}
+@media (max-width: 450px) {
+  .h-custom {
+  height: 100%;
+  }
+}
+
+.white{
+  color: white;
+}
+
+.img_product{
+  height: 30rem;
+  width: 30rem;
+}
+.prod_img{
+  height: 35rem;
+  width: 35rem;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.toggle{
+  height: 30px;
+}
+
+.button_rev {
+  background-color: #c2fbd7;
+  border-radius: 100px;
+  box-shadow: rgba(44, 187, 99, .2) 0 -25px 18px -14px inset,rgba(44, 187, 99, .15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+  color: green;
+  cursor: pointer;
+  display: inline-block;
+  font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  transition: all 250ms;
+  border: 0;
+  font-size: 16px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-right: 2rem;
+  margin-bottom: 3rem;
+}
+
+.button_rev:hover {
+  box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+  transform: scale(1.05) rotate(-1deg);
+}
+
+.foot_er{
+  /* position:absolute; */
+   position:relative;
+bottom:0;
+width: 100%; 
+/* margin-top: 9rem; */
+}

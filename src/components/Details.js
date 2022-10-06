@@ -12,39 +12,64 @@ import { cartSaveApiCall } from "./cartApicall";
 
 const Details = () => {
   var User = JSON.parse(localStorage.getItem("token"));
-  const userId = User.data._id;
+  const userId = User?.user?._id;
+  const userEmail = User?.user?.email;
 
   const [productDetails, setProductDetails] = useState();
   useEffect(() => {
     productApiCall().then((res) => {
-      setProductDetails(res);
+      setProductDetails(res.data);
     });
   }, []);
 
   //////////////////////////////////////////////////////////
+  
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
-  const addToCart = (product) => {
+  const addToCart = async (product) => {
+    // const isAdded = cart.some((id) => {
+    //   return id === product.id;
+    // });
+
+    let data = {
+      userId: userId,
+      userEmail: userEmail,
+      products: [
+        {
+          id: product.productId,
+          productName: product.productName,
+          productPrice: product.productPrice,
+          
+        },
+      ],
+    };
+    let resposnseData = await cartSaveApiCall(data);
+    console.log("---------------->", resposnseData.data);
+
     const isAdded = cart.some((id) => {
       return id === product.id;
     });
-    
-    if (!isAdded) {
-      cartSaveApiCall({id: product.id,
-        name: product.name,
-        price: product.price,
-        amount: 1,
-        userId: userId,})
-      dispatch(
 
+    if (!isAdded) {
+      // cartSaveApiCall({
+      //   id: product.id,
+      //   productName: product.name,
+      //   productPrice: product.price,
+      //   // amount: 1,
+      //   // userId: userId,
+      // });
+      dispatch(
         cartAction.add({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          amount: 1,
-          userId: userId,
+          id: product.productId,
+          productName: product.productName,
+          productPrice: product.productPrice,
+          // amount: 1,
+          // userId: userId,
         })
       );
+      productApiCall().then((res) => {
+        setProductDetails(res.data);
+      });
     } else {
       alert("Already Added");
     }
@@ -52,16 +77,21 @@ const Details = () => {
 
   //wishlist
   const wishlist = useSelector((state) => state.wishlist);
-  const addToWishlist = (product) => {
-    wishlistSaveApi({
-      id: product.id,
-      name: product.name,
-      price: product.price,
-      amount: 1,
+  const addToWishlist = async (product) => {
+    let data = {
       userId: userId,
-    });
+      userEmail: userEmail,
+      products: [
+        {
+          id: product.productId,
+          productName: product.productName,
+          productPrice: product.productPrice,
+        },
+      ],
+    };
+    let resposnseData = await wishlistSaveApi(data);
+    console.log(resposnseData.data);
 
-    console.log(product["id"], product["name"], product["price"]);
     const isAdded = wishlist.some((id) => {
       return id === product.id;
     });
@@ -69,10 +99,9 @@ const Details = () => {
     if (!isAdded) {
       dispatch(
         wishlistAction.add({
-          id: product.id,
-          name: product.name,
-          price: product.price,
-          amount: 1,
+          id: product.productId,
+          productName: product.productName,
+          productPrice: product.productPrice,
         })
       );
     } else {
@@ -94,14 +123,21 @@ const Details = () => {
               productDetails.data
                 .filter((product) => product._id === product_id)
                 .map((productDetails) => (
-                  <div key={productDetails.id}>
-                    <h3>{productDetails.name}</h3>
-                    <p>{productDetails.desc}</p>
+                  <div key={productDetails.productId}>
+                    <h3>{productDetails.productName}</h3>
+                    <p>{productDetails.productDesc}</p>
                     {/* <img src={productDetails.large} alt={productDetails.name} /> */}
-                    <h2>{productDetails.price}</h2>
+
+                    <img
+                      className="prod_img "
+                      src={productDetails.img}
+                      alt={productDetails.productName}
+                    />
+
+                    <h2>{productDetails.productPrice}</h2>
                     <Link to="/cart">
-                      <button
-                        className="sign_up"
+                      <button 
+                        className="sign_up button_rev"
                         onClick={addToCart.bind(this, productDetails)}
                       >
                         Buy Now
